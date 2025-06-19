@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MyFirstGameLibrary;
 using MyFirstGameLibrary.Graphics;
+using MyFirstGameLibrary.Inputs;
+
 namespace DungeonSlimeGame {
     public class Game2 : Core {
         // Graficos
@@ -110,27 +112,25 @@ namespace DungeonSlimeGame {
         //---------------------- My Methods ----------------------
         // Mueve la posicion del SLIME segun la tecla presionada
         private void CheckKeyboardInput() {
-            KeyboardState kbState = Keyboard.GetState();
             float speed = MOVEMENT_SPEED;
-            if (kbState.IsKeyDown(Keys.Space)) speed *= 1.5f;
-            if(kbState.IsKeyDown(Keys.W) || kbState.IsKeyDown(Keys.Up)) _slimePosition.Y -= speed;
-            if(kbState.IsKeyDown(Keys.S) || kbState.IsKeyDown(Keys.Down)) _slimePosition.Y += speed;
-            if(kbState.IsKeyDown(Keys.A) || kbState.IsKeyDown(Keys.Left)) _slimePosition.X -= speed;
-            if(kbState.IsKeyDown(Keys.D) || kbState.IsKeyDown(Keys.Right)) _slimePosition.X += speed;
+            if (Input.Keyboard.IsKeyDown(Keys.Space)) speed *= 1.5f;
+            if(Input.Keyboard.IsKeyDown(Keys.W) || Input.Keyboard.IsKeyDown(Keys.Up)) _slimePosition.Y -= speed;
+            if(Input.Keyboard.IsKeyDown(Keys.S) || Input.Keyboard.IsKeyDown(Keys.Down)) _slimePosition.Y += speed;
+            if(Input.Keyboard.IsKeyDown(Keys.A) || Input.Keyboard.IsKeyDown(Keys.Left)) _slimePosition.X -= speed;
+            if(Input.Keyboard.IsKeyDown(Keys.D) || Input.Keyboard.IsKeyDown(Keys.Right)) _slimePosition.X += speed;
         }
         // Mueve la posicion del SLIME segun el boton. Adicionalmente se prueba la vibracion al correr.
         private void CheckGamepadInput() {
-            GamePadState gpState = GamePad.GetState(0); // Necesito saber que Joystick voy a leer
+            GamePadInfo gpState = Input.GamePads[0]; // Necesito saber que Joystick voy a leer
             float speed = MOVEMENT_SPEED;
             if (gpState.IsButtonDown(Buttons.A)) {
                 speed *= 1.5f;
                 GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
             }
             else  GamePad.SetVibration(PlayerIndex.One, 0, 0);
-            Console.WriteLine(gpState.ThumbSticks.Left);
-            if (gpState.ThumbSticks.Left != Vector2.Zero) { // Lee el analogico Izquierdo y si se esta moviendo actua
-                _slimePosition.X += gpState.ThumbSticks.Left.X * speed;
-                _slimePosition.Y -= gpState.ThumbSticks.Left.Y * speed;
+            if (gpState.LeftThumbStick != Vector2.Zero) { // Lee el analogico Izquierdo y si se esta moviendo actua
+                _slimePosition.X += gpState.LeftThumbStick.X * speed;
+                _slimePosition.Y -= gpState.LeftThumbStick.Y * speed;
             }
             else {
                 // Movimiento por el D-PAD
