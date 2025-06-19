@@ -1,0 +1,9 @@
+# Archivos de Build DesktopGL
+/*/bin
+/*/obj
+/*/Content/obj
+/*/Content/bin
+
+# Configs del IDE
+/*/.vscode
+.idea/*
