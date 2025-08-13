@@ -1,7 +1,7 @@
 namespace MyFirstGameLibrary.Inputs;
 using Microsoft.Xna.Framework;
 using System.Runtime.InteropServices;
-
+// TODO: Implementar patron Command para agregar capa que separe acciones del juego de los distintos Inputs
 public class InputManager
 {
     /// <summary>

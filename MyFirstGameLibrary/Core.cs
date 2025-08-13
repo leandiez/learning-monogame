@@ -10,12 +10,12 @@ namespace MyFirstGameLibrary;
 
 public class Core : Game
 {
-    internal static Core s_instance;
+    internal static Core SInstance;
 
     /// <summary>
     /// Gets a reference to the Core instance.
     /// </summary>
-    public static Core Instance => s_instance;
+    public static Core Instance => SInstance;
 
     /// <summary>
     /// Gets the graphics device manager to control the presentation of graphics.
@@ -57,13 +57,13 @@ public class Core : Game
     public Core(string title, int width, int height, bool fullScreen)
     {
         // Ensure that multiple cores are not created.
-        if (s_instance != null)
+        if (SInstance != null)
         {
             throw new InvalidOperationException($"Only a single Core instance can be created");
         }
 
         // Store reference to engine for global member access.
-        s_instance = this;
+        SInstance = this;
 
         // Create a new graphics device manager.
         Graphics = new GraphicsDeviceManager(this);

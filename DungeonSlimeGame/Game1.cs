@@ -8,9 +8,9 @@ public class Game1 : Game {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Texture2D _redBallTexture;
-    Vector2 ballPosition;
-    float ballSpeed;
-    int deadZone;
+    Vector2 _ballPosition;
+    float _ballSpeed;
+    int _deadZone;
 
     // Constructor, hereda de Game
     public Game1() {
@@ -20,10 +20,10 @@ public class Game1 : Game {
     }
     // Logica a correr antes de iniciar el loop del juego
     protected override void Initialize() {
-        ballPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
+        _ballPosition = new Vector2(_graphics.PreferredBackBufferWidth / 2,
                            _graphics.PreferredBackBufferHeight / 2);
-        ballSpeed = 200f;
-        deadZone = 4096;
+        _ballSpeed = 200f;
+        _deadZone = 4096;
         base.Initialize();
     }
     // Carga el contenido del juego en memoria
@@ -35,20 +35,20 @@ public class Game1 : Game {
     protected override void Update(GameTime gameTime) {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
         // Actualizo posicion de la bola segun direcciones del teclado.
-        float updatedBallSpeed = ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        float updatedBallSpeed = _ballSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         var kstate = Keyboard.GetState();
-        if (kstate.IsKeyDown(Keys.Up)) ballPosition.Y -= updatedBallSpeed;
-        if (kstate.IsKeyDown(Keys.Down)) ballPosition.Y += updatedBallSpeed;
-        if (kstate.IsKeyDown(Keys.Left)) ballPosition.X -= updatedBallSpeed;
-        if (kstate.IsKeyDown(Keys.Right)) ballPosition.X += updatedBallSpeed;
+        if (kstate.IsKeyDown(Keys.Up)) _ballPosition.Y -= updatedBallSpeed;
+        if (kstate.IsKeyDown(Keys.Down)) _ballPosition.Y += updatedBallSpeed;
+        if (kstate.IsKeyDown(Keys.Left)) _ballPosition.X -= updatedBallSpeed;
+        if (kstate.IsKeyDown(Keys.Right)) _ballPosition.X += updatedBallSpeed;
 
         // Idem anterior pero con Joystick
         if (Joystick.LastConnectedIndex == 0) {
             JoystickState jstate = Joystick.GetState((int)PlayerIndex.One);
-            if (jstate.Axes[1] < -deadZone) ballPosition.Y -= updatedBallSpeed;
-            if (jstate.Axes[1] > deadZone) ballPosition.Y += updatedBallSpeed;
-            if (jstate.Axes[0] < -deadZone) ballPosition.X -= updatedBallSpeed;
-            if (jstate.Axes[0] > deadZone) ballPosition.X += updatedBallSpeed;
+            if (jstate.Axes[1] < -_deadZone) _ballPosition.Y -= updatedBallSpeed;
+            if (jstate.Axes[1] > _deadZone) _ballPosition.Y += updatedBallSpeed;
+            if (jstate.Axes[0] < -_deadZone) _ballPosition.X -= updatedBallSpeed;
+            if (jstate.Axes[0] > _deadZone) _ballPosition.X += updatedBallSpeed;
         }
         base.Update(gameTime);
     }
@@ -56,8 +56,8 @@ public class Game1 : Game {
     protected override void Draw(GameTime gameTime) {
         GraphicsDevice.Clear(Color.DarkBlue);
         _spriteBatch.Begin();
-        _spriteBatch.Draw(_redBallTexture, ballPosition, null, Color.White, 0f, new Vector2(_redBallTexture.Width / 2, _redBallTexture.Height / 2), Vector2.One, SpriteEffects.None, 0f);
-        _spriteBatch.Draw(_redBallTexture, ballPosition, Color.White);
+        _spriteBatch.Draw(_redBallTexture, _ballPosition, null, Color.White, 0f, new Vector2(_redBallTexture.Width / 2, _redBallTexture.Height / 2), Vector2.One, SpriteEffects.None, 0f);
+        _spriteBatch.Draw(_redBallTexture, _ballPosition, Color.White);
         _spriteBatch.End();
         base.Draw(gameTime);
     }
