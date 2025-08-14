@@ -11,20 +11,32 @@ using MyFirstGameLibrary.Inputs;
 
 namespace DungeonSlimeGame {
     public class Game2 : Core {
+        // Actors - OffTutorial
         private Slime _slimePlayer = new Slime(Vector2.Zero, new Vector2(5,0));
-        private Bat _batEnemy = new Bat(new Vector2( 10, 0), AssignRandomBatVelocity());
-        // Graficos
-        private AnimatedSprite _bat;
-        
-        // Inputs
-        private const float MovementSpeed = 5.0f;
+        private Bat _batEnemy = new Bat(Vector2.Zero, AssignRandomBatVelocity());
         
         // Colliders
-        private Rectangle screenBounds;
+        private Rectangle _roomBounds;
+        
+        // Defines the tilemap to draw.
+        private Tilemap _tilemap;
         public Game2() : base("Dungeon Slime", 1280, 720, false) { }
 
         protected override void Initialize() {
             base.Initialize();
+            Rectangle screenBounds = GraphicsDevice.PresentationParameters.Bounds;
+            _roomBounds = new Rectangle(
+                (int)_tilemap.TileWidth,
+                (int)_tilemap.TileHeight,
+                screenBounds.Width - (int)_tilemap.TileWidth * 2,
+                screenBounds.Height - (int)_tilemap.TileHeight * 2
+            );
+            // Initial slime position will be the center tile of the tile map.
+            // Initial bat position will be in the top left corner of the room
+            int centerRow = _tilemap.Rows / 2;
+            int centerColumn = _tilemap.Columns / 2;
+            _slimePlayer.Position = new Vector2(centerColumn * _tilemap.TileWidth, centerRow * _tilemap.TileHeight);
+            _batEnemy.Position = new Vector2(_roomBounds.Left, _roomBounds.Top);
         }
         
         protected override void LoadContent() {
@@ -37,6 +49,9 @@ namespace DungeonSlimeGame {
             _batEnemy.Animation = atlas.CreateAnimatedSprite("bat-animation");
             _batEnemy.Animation.Scale = new Vector2(5.0f, 5.0f);
             
+            _tilemap = Tilemap.FromFile(Content,"images/tilemap-definition.xml");
+            _tilemap.Scale = new Vector2(4.0f, 4.0f);
+            
             base.LoadContent();
         }
 
@@ -46,12 +61,7 @@ namespace DungeonSlimeGame {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            screenBounds = new Rectangle(
-                0,
-                0,
-                GraphicsDevice.PresentationParameters.BackBufferWidth,
-                GraphicsDevice.PresentationParameters.BackBufferHeight
-            );
+            
             // Verifica que botones se estan pulsando y cambia la posicion del SLIME
             CheckKeyboardInput();
             CheckGamepadInput();
@@ -64,22 +74,22 @@ namespace DungeonSlimeGame {
             // Use distance based checks to determine if the slime is within the
             // bounds of the game screen, and if it is outside that screen edge,
             // move it back inside.
-            if (_slimePlayer.Collider.Left < screenBounds.Left)
+            if (_slimePlayer.Collider.Left < _roomBounds.Left)
             {
-                _slimePlayer.Position = new Vector2(screenBounds.Left , _slimePlayer.Position.Y);
+                _slimePlayer.Position = new Vector2(_roomBounds.Left , _slimePlayer.Position.Y);
             }
-            else if (_slimePlayer.Collider.Right > screenBounds.Right)
+            else if (_slimePlayer.Collider.Right > _roomBounds.Right)
             {
-                _slimePlayer.Position = new Vector2(screenBounds.Right - _slimePlayer.Animation.Width , _slimePlayer.Position.Y);
+                _slimePlayer.Position = new Vector2(_roomBounds.Right - _slimePlayer.Animation.Width , _slimePlayer.Position.Y);
             }
 
-            if (_slimePlayer.Collider.Top < screenBounds.Top)
+            if (_slimePlayer.Collider.Top < _roomBounds.Top)
             {
-                _slimePlayer.Position = new Vector2(_slimePlayer.Position.X, screenBounds.Top);
+                _slimePlayer.Position = new Vector2(_slimePlayer.Position.X, _roomBounds.Top);
             }
-            else if (_slimePlayer.Collider.Bottom > screenBounds.Bottom)
+            else if (_slimePlayer.Collider.Bottom > _roomBounds.Bottom)
             {
-                _slimePlayer.Position = new Vector2(_slimePlayer.Position.X, screenBounds.Bottom - _slimePlayer.Animation.Height);
+                _slimePlayer.Position = new Vector2(_slimePlayer.Position.X, _roomBounds.Bottom - _slimePlayer.Animation.Height);
             }
             // BAT COLLIDERS
             // Variable para la normal
@@ -88,26 +98,26 @@ namespace DungeonSlimeGame {
             // Use distance based checks to determine if the bat is within the
             // bounds of the game screen, and if it is outside that screen edge,
             // reflect it about the screen edge normal.
-            if (_batEnemy.Collider.Left < screenBounds.Left)
+            if (_batEnemy.Collider.Left < _roomBounds.Left)
             {
                 normal.X = Vector2.UnitX.X;
-                newPosition.X = screenBounds.Left;
+                newPosition.X = _roomBounds.Left;
             }
-            else if (_batEnemy.Collider.Right > screenBounds.Right)
+            else if (_batEnemy.Collider.Right > _roomBounds.Right)
             {
                 normal.X = -Vector2.UnitX.X;
-                newPosition.X = screenBounds.Right - _batEnemy.Animation.Width;
+                newPosition.X = _roomBounds.Right - _batEnemy.Animation.Width;
             }
 
-            if (_batEnemy.Collider.Top < screenBounds.Top)
+            if (_batEnemy.Collider.Top < _roomBounds.Top)
             {
                 normal.Y = Vector2.UnitY.Y;
-                newPosition.Y = screenBounds.Top;
+                newPosition.Y = _roomBounds.Top;
             }
-            else if (_batEnemy.Collider.Bottom > screenBounds.Bottom)
+            else if (_batEnemy.Collider.Bottom > _roomBounds.Bottom)
             {
                 normal.Y = -Vector2.UnitY.Y;
-                newPosition.Y = screenBounds.Bottom - _batEnemy.Animation.Height;
+                newPosition.Y = _roomBounds.Bottom - _batEnemy.Animation.Height;
             }
             _batEnemy.Position = newPosition;
 
@@ -145,6 +155,7 @@ namespace DungeonSlimeGame {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _tilemap.Draw(SpriteBatch);
             _slimePlayer.Draw(SpriteBatch);
             _batEnemy.Draw(SpriteBatch);
 
