@@ -4,11 +4,11 @@ using DungeonSlimeGame.Actors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using MyFirstGameLibrary;
-using MyFirstGameLibrary.Primitives;
 using MyFirstGameLibrary.Graphics;
 using MyFirstGameLibrary.Inputs;
-
 namespace DungeonSlimeGame {
     public class Game2 : Core {
         // Actors - OffTutorial
@@ -20,6 +20,9 @@ namespace DungeonSlimeGame {
         
         // Defines the tilemap to draw.
         private Tilemap _tilemap;
+        //Audio Files
+        private SoundEffect _bounceSoundEffect;
+        private SoundEffect _collectSoundEffect;
         public Game2() : base("Dungeon Slime", 1280, 720, false) { }
 
         protected override void Initialize() {
@@ -48,10 +51,24 @@ namespace DungeonSlimeGame {
             _slimePlayer.Animation.Scale = new Vector2(5.0f, 5.0f);
             _batEnemy.Animation = atlas.CreateAnimatedSprite("bat-animation");
             _batEnemy.Animation.Scale = new Vector2(5.0f, 5.0f);
-            
+            // Carga de las texturas del TILEMAP desde una descripcion en XML
+            // TODO Ver como se puede implementar esto mismo usando Tiled u otra herramienta externa
             _tilemap = Tilemap.FromFile(Content,"images/tilemap-definition.xml");
             _tilemap.Scale = new Vector2(4.0f, 4.0f);
             
+            // Carga archivos de sonido en su referencia
+            _bounceSoundEffect = Content.Load<SoundEffect>("audio/bounce");
+            _collectSoundEffect = Content.Load<SoundEffect>("audio/collect");
+
+            // Configura y reproduce TEMA de fondo
+            Song theme = Content.Load<Song>("audio/theme");
+            if (MediaPlayer.State == MediaState.Playing)
+            {
+                MediaPlayer.Stop();
+            }
+            MediaPlayer.Play(theme);
+            MediaPlayer.IsRepeating = true;
+
             base.LoadContent();
         }
 
@@ -127,6 +144,7 @@ namespace DungeonSlimeGame {
             if (normal != Vector2.Zero)
             {
                 _batEnemy.Velocity = Vector2.Reflect(_batEnemy.Velocity, normal);
+                _bounceSoundEffect.Play();
             }
             
             // INTERSECTION COLLIDER
@@ -146,7 +164,8 @@ namespace DungeonSlimeGame {
                 _batEnemy.Position = new Vector2(column * _batEnemy.Animation.Width, row * _batEnemy.Animation.Height);
 
                 // Assign a new random velocity to the bat
-                AssignRandomBatVelocity();
+                _batEnemy.Velocity = AssignRandomBatVelocity();
+                _collectSoundEffect.Play();
             }
             base.Update(gameTime);
         }
