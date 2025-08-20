@@ -23,25 +23,18 @@ namespace DungeonSlimeGame {
         //Audio Files
         private SoundEffect _bounceSoundEffect;
         private SoundEffect _collectSoundEffect;
+        private Song _themeSong;
+        // Fonts and Text
+        // The SpriteFont Description used to draw text.
+        private SpriteFont _font;
+        private int _score;
+        // Defines the position to draw the score text at.
+        private Vector2 _scoreTextPosition;
+        // Defines the origin used when drawing the score text.
+        private Vector2 _scoreTextOrigin;
+
         public Game2() : base("Dungeon Slime", 1280, 720, false) { }
 
-        protected override void Initialize() {
-            base.Initialize();
-            Rectangle screenBounds = GraphicsDevice.PresentationParameters.Bounds;
-            _roomBounds = new Rectangle(
-                (int)_tilemap.TileWidth,
-                (int)_tilemap.TileHeight,
-                screenBounds.Width - (int)_tilemap.TileWidth * 2,
-                screenBounds.Height - (int)_tilemap.TileHeight * 2
-            );
-            // Initial slime position will be the center tile of the tile map.
-            // Initial bat position will be in the top left corner of the room
-            int centerRow = _tilemap.Rows / 2;
-            int centerColumn = _tilemap.Columns / 2;
-            _slimePlayer.Position = new Vector2(centerColumn * _tilemap.TileWidth, centerRow * _tilemap.TileHeight);
-            _batEnemy.Position = new Vector2(_roomBounds.Left, _roomBounds.Top);
-        }
-        
         protected override void LoadContent() {
             // Carga de texturas a partir del XML con una descripcion del ATLAS.
             // Se pasa el ContentManager del juego para que cargue en memoria la textura principal
@@ -59,19 +52,39 @@ namespace DungeonSlimeGame {
             // Carga archivos de sonido en su referencia
             _bounceSoundEffect = Content.Load<SoundEffect>("audio/bounce");
             _collectSoundEffect = Content.Load<SoundEffect>("audio/collect");
-
-            // Configura y reproduce TEMA de fondo
-            Song theme = Content.Load<Song>("audio/theme");
-            if (MediaPlayer.State == MediaState.Playing)
-            {
-                MediaPlayer.Stop();
-            }
-            MediaPlayer.Play(theme);
-            MediaPlayer.IsRepeating = true;
-
+            _themeSong = Content.Load<Song>("audio/theme");
+            // Load the font
+            _font = Content.Load<SpriteFont>("fonts/04B_30");
             base.LoadContent();
         }
 
+        protected override void Initialize() {
+            base.Initialize();
+            Rectangle screenBounds = GraphicsDevice.PresentationParameters.Bounds;
+            _roomBounds = new Rectangle(
+                (int)_tilemap.TileWidth,
+                (int)_tilemap.TileHeight,
+                screenBounds.Width - (int)_tilemap.TileWidth * 2,
+                screenBounds.Height - (int)_tilemap.TileHeight * 2
+            );
+            // Initial slime position will be the center tile of the tile map.
+            // Initial bat position will be in the top left corner of the room
+            int centerRow = _tilemap.Rows / 2;
+            int centerColumn = _tilemap.Columns / 2;
+            _slimePlayer.Position = new Vector2(centerColumn * _tilemap.TileWidth, centerRow * _tilemap.TileHeight);
+            _batEnemy.Position = new Vector2(_roomBounds.Left, _roomBounds.Top);
+            // Start playing the background music.
+            Audio.PlaySong(_themeSong);
+            // Set the position of the score text to align to the left edge of the
+            // room bounds, and to vertically be at the center of the first tile.
+            _scoreTextPosition = new Vector2(_roomBounds.Left, _tilemap.TileHeight * 0.5f);
+
+            // Set the origin of the text so it is left-centered.
+            float scoreTextYOrigin = _font.MeasureString("Score").Y * 0.5f;
+            _scoreTextOrigin = new Vector2(0, scoreTextYOrigin);
+
+        }
+        
         protected override void Update(GameTime gameTime) {
             Console.WriteLine(_slimePlayer.Collider.Location.ToString());
             
@@ -144,7 +157,7 @@ namespace DungeonSlimeGame {
             if (normal != Vector2.Zero)
             {
                 _batEnemy.Velocity = Vector2.Reflect(_batEnemy.Velocity, normal);
-                _bounceSoundEffect.Play();
+                Audio.PlaySoundEffect(_bounceSoundEffect);
             }
             
             // INTERSECTION COLLIDER
@@ -165,7 +178,9 @@ namespace DungeonSlimeGame {
 
                 // Assign a new random velocity to the bat
                 _batEnemy.Velocity = AssignRandomBatVelocity();
-                _collectSoundEffect.Play();
+                Audio.PlaySoundEffect(_collectSoundEffect);
+                // Increase the player's score.
+                _score += 100;
             }
             base.Update(gameTime);
         }
@@ -177,6 +192,18 @@ namespace DungeonSlimeGame {
             _tilemap.Draw(SpriteBatch);
             _slimePlayer.Draw(SpriteBatch);
             _batEnemy.Draw(SpriteBatch);
+            // Draw the score
+            SpriteBatch.DrawString(
+                _font,                      // spriteFont
+                $"Score: {_score}",    // text
+                _scoreTextPosition,         // position
+                Color.White,                // color
+                0.0f,               // rotation
+                _scoreTextOrigin,           // origin
+                1.0f,                 // scale
+                SpriteEffects.None,         // effects
+                0.0f              // layerDepth
+            );
 
             SpriteBatch.End();
 
@@ -193,6 +220,24 @@ namespace DungeonSlimeGame {
             if(Input.Keyboard.IsKeyDown(Keys.S) || Input.Keyboard.IsKeyDown(Keys.Down)) _slimePlayer.Position += new Vector2(0.0f, speed);
             if(Input.Keyboard.IsKeyDown(Keys.A) || Input.Keyboard.IsKeyDown(Keys.Left)) _slimePlayer.Position -= new Vector2(speed, 0.0f);
             if(Input.Keyboard.IsKeyDown(Keys.D) || Input.Keyboard.IsKeyDown(Keys.Right)) _slimePlayer.Position += new Vector2(speed, 0.0f);
+            
+            // AUDIO CONTROLS
+            if (Input.Keyboard.WasKeyJustPressed(Keys.M))
+            {
+                Audio.ToggleMute();
+            }
+            // Button +
+            if (Input.Keyboard.WasKeyJustPressed(Keys.OemPlus))
+            {
+                Audio.SongVolume += 0.1f;
+                Audio.SoundEffectVolume += 0.1f;
+            }
+            // Button -
+            if (Input.Keyboard.WasKeyJustPressed(Keys.OemMinus))
+            {
+                Audio.SongVolume -= 0.1f;
+                Audio.SoundEffectVolume -= 0.1f;
+            }
         }
         // Mueve la posicion del SLIME segun el boton. Adicionalmente se prueba la vibracion al correr.
         private void CheckGamepadInput() {

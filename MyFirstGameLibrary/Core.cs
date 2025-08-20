@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MyFirstGameLibrary.Audio;
 using Microsoft.Xna.Framework.Input;
 using MyFirstGameLibrary.Inputs;
 
@@ -40,7 +41,11 @@ public class Core : Game
     /// Gets a reference to the input management system.
     /// </summary>
     public static InputManager Input { get; private set; }
-
+    /// <summary>
+    /// Gets a reference to the audio control system.
+    /// </summary>
+    public static AudioController Audio { get; private set; }
+    
     /// <summary>
     /// Gets or Sets a value that indicates if the game should exit when the esc key on the keyboard is pressed.
     /// </summary>
@@ -88,10 +93,18 @@ public class Core : Game
 
         // Mouse is visible by default
         IsMouseVisible = true;
-        // Create a new input manager
+        // Create a new input manager (created here beacuse that way I can add devices using SDL2 calls)
         Input = new InputManager();
         
     }
+    protected override void UnloadContent()
+    {
+        // Dispose of the audio controller.
+        Audio.Dispose();
+
+        base.UnloadContent();
+    }
+
 
     protected override void Initialize()
     {
@@ -103,18 +116,21 @@ public class Core : Game
 
         // Create the sprite batch instance.
         SpriteBatch = new SpriteBatch(GraphicsDevice);
+        // Create a new audio controller.
+        Audio = new AudioController();
+
 
     }
     protected override void Update(GameTime gameTime)
     {
         // Update the input manager
         Input.Update(gameTime);
-
+        // Update the audio controller.
+        Audio.Update();
         if (ExitOnEscape && Input.Keyboard.IsKeyDown(Keys.Escape))
         {
             Exit();
         }
-
         base.Update(gameTime);
     }
 }
