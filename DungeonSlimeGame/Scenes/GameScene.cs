@@ -8,6 +8,13 @@ using MyFirstGameLibrary.Scenes;
 using MyFirstGameLibrary.Graphics;
 using MyFirstGameLibrary.Inputs;
 using DungeonSlimeGame.Actors;
+using DungeonSlimeGame.UI;
+using Gum.DataTypes;
+using Gum.Wireframe;
+using Gum.Managers;
+using MonoGameGum;
+using Gum.Forms.Controls;
+using MonoGameGum.GueDeriving;
 
 namespace DungeonSlimeGame.Scenes;
 
@@ -31,9 +38,19 @@ public class GameScene : Scene {
     private Vector2 _scoreTextPosition;
     // Defines the origin used when drawing the score text.
     private Vector2 _scoreTextOrigin;
+    
+    // UI elements
+    private Panel _pausePanel;
+    private AnimatedButton _resumeButton;
+    private SoundEffect _uiSoundEffect;
+    // Reference to the texture atlas that we can pass to UI elements when they
+    // are created.
+    private TextureAtlas _atlas;
+
 
     public override void Initialize() {
         base.Initialize();
+        InitializeUI();
         Core.ExitOnEscape = false;
         Rectangle screenBounds = Core.GraphicsDevice.PresentationParameters.Bounds;
         _roomBounds = new Rectangle(
@@ -61,10 +78,10 @@ public class GameScene : Scene {
         // Carga de texturas a partir del XML con una descripcion del ATLAS.
         // Se pasa el ContentManager del juego para que cargue en memoria la textura principal
         // El resto seran TextureRegions los cuales se renderizan mediante un Sprite.
-        TextureAtlas atlas = TextureAtlas.FromFile(Content, "images/atlas-definition.xml");
-        _slimePlayer.Animation = atlas.CreateAnimatedSprite("slime-animation");
+        _atlas = TextureAtlas.FromFile(Core.Content, "images/atlas-definition.xml");
+        _slimePlayer.Animation = _atlas.CreateAnimatedSprite("slime-animation");
         _slimePlayer.Animation.Scale = new Vector2(5.0f, 5.0f);
-        _batEnemy.Animation = atlas.CreateAnimatedSprite("bat-animation");
+        _batEnemy.Animation = _atlas.CreateAnimatedSprite("bat-animation");
         _batEnemy.Animation.Scale = new Vector2(5.0f, 5.0f);
         // Carga de las texturas del TILEMAP desde una descripcion en XML
         // TODO Ver como se puede implementar esto mismo usando Tiled u otra herramienta externa
@@ -74,6 +91,7 @@ public class GameScene : Scene {
         // Carga archivos de sonido en su referencia
         _bounceSoundEffect = Content.Load<SoundEffect>("audio/bounce");
         _collectSoundEffect = Content.Load<SoundEffect>("audio/collect");
+        _uiSoundEffect = Core.Content.Load<SoundEffect>("audio/ui");
         // Load the font
         _font = Content.Load<SpriteFont>("fonts/04B_30");
         base.LoadContent();
@@ -82,7 +100,12 @@ public class GameScene : Scene {
             #if DEBUG
             Console.WriteLine(_slimePlayer.Collider.Location.ToString());
             #endif
-            
+            // UI and condition of pause
+            GumService.Default.Update(gameTime);
+            if (_pausePanel.IsVisible)
+            {
+                return;
+            }
             // Verifica que botones se estan pulsando y cambia la posicion del SLIME
             CheckKeyboardInput();
             CheckGamepadInput();
@@ -196,7 +219,8 @@ public class GameScene : Scene {
             );
 
             Core.SpriteBatch.End();
-
+            // Draw the Gum UI
+            GumService.Default.Draw();
             base.Draw(gameTime);
         }
         //---------------------- My Methods ----------------------
@@ -204,10 +228,10 @@ public class GameScene : Scene {
         // TODO: Estos Checks deberian ir en una clase aparte para gestionar los Inputs que soporta el Juego. Candidato InputManager
         private void CheckKeyboardInput() {
             float speed = _slimePlayer.Velocity.Length();
-            // If the escape key is pressed, return to the title screen.
+            // If the escape key is pressed, pause the game
             if (Core.Input.Keyboard.WasKeyJustPressed(Keys.Escape))
             {
-                Core.ChangeScene(new TitleScene());
+                PauseGame();
             }
             if (Core.Input.Keyboard.IsKeyDown(Keys.Space)) speed *= 1.5f;
             if(Core.Input.Keyboard.IsKeyDown(Keys.W) || Core.Input.Keyboard.IsKeyDown(Keys.Up)) _slimePlayer.Position -= new Vector2(0.0f, speed);
@@ -237,6 +261,11 @@ public class GameScene : Scene {
         private void CheckGamepadInput() {
             GamePadInfo gpState = Core.Input.GamePads[0]; // Necesito saber que Joystick voy a leer
             float speed = _slimePlayer.Velocity.Length();
+            // If the start button is pressed, pause the game
+            if (gpState.WasButtonJustPressed(Buttons.Start))
+            {
+                PauseGame();
+            }
             if (gpState.IsButtonDown(Buttons.A)) {
                 speed *= 1.5f;
                 GamePad.SetVibration(PlayerIndex.One, 1.0f, 1.0f);
@@ -265,5 +294,84 @@ public class GameScene : Scene {
 
             // Multiply the direction vector by the movement speed.
             return (direction * Random.Shared.Next(5, 10));
+        }
+        private void PauseGame()
+        {
+            // Make the pause panel UI element visible.
+            _pausePanel.IsVisible = true;
+            // Set the resume button to have focus
+            _resumeButton.IsFocused = true;
+        }
+        
+        private void CreatePausePanel()
+        {
+            _pausePanel = new Panel();
+            _pausePanel.Anchor(Anchor.Center);
+            _pausePanel.Visual.WidthUnits = DimensionUnitType.Absolute;
+            _pausePanel.Visual.HeightUnits = DimensionUnitType.Absolute;
+            _pausePanel.Visual.Height = 70;
+            _pausePanel.Visual.Width = 264;
+            _pausePanel.IsVisible = false;
+            _pausePanel.AddToRoot();
+
+            TextureRegion backgroundRegion = _atlas.GetRegion("panel-background");
+
+            NineSliceRuntime background = new NineSliceRuntime();
+            background.Dock(Dock.Fill);
+            background.Texture = backgroundRegion.Texture;
+            background.TextureAddress = TextureAddress.Custom;
+            background.TextureHeight = backgroundRegion.Height;
+            background.TextureLeft = backgroundRegion.Region.Left;
+            background.TextureTop = backgroundRegion.Region.Top;
+            background.TextureWidth = backgroundRegion.Width;
+            _pausePanel.AddChild(background);
+
+            TextRuntime textInstance = new TextRuntime();
+            textInstance.Text = "PAUSED";
+            textInstance.CustomFontFile = @"fonts/04b_30.fnt";
+            textInstance.UseCustomFont = true;
+            textInstance.FontScale = 0.5f;
+            textInstance.X = 10f;
+            textInstance.Y = 10f;
+            _pausePanel.AddChild(textInstance);
+
+            _resumeButton = new AnimatedButton(_atlas);
+            _resumeButton.Text = "RESUME";
+            _resumeButton.Anchor(Anchor.BottomLeft);
+            _resumeButton.Visual.X = 9f;
+            _resumeButton.Visual.Y = -9f;
+            _resumeButton.Visual.Width = 80;
+            _resumeButton.Click += HandleResumeButtonClicked;
+            _pausePanel.AddChild(_resumeButton);
+
+            AnimatedButton quitButton = new AnimatedButton(_atlas);
+            quitButton.Text = "QUIT";
+            quitButton.Anchor(Anchor.BottomRight);
+            quitButton.Visual.X = -9f;
+            quitButton.Visual.Y = -9f;
+            quitButton.Width = 80;
+            quitButton.Click += HandleQuitButtonClicked;
+
+            _pausePanel.AddChild(quitButton);
+        }
+        private void HandleResumeButtonClicked(object sender, EventArgs e)
+        {
+            // A UI interaction occurred, play the sound effect
+            Core.Audio.PlaySoundEffect(_uiSoundEffect);
+            // Make the pause panel invisible to resume the game.
+            _pausePanel.IsVisible = false;
+        }
+        private void HandleQuitButtonClicked(object sender, EventArgs e)
+        {
+            // A UI interaction occurred, play the sound effect
+            Core.Audio.PlaySoundEffect(_uiSoundEffect);
+
+            // Go back to the title scene.
+            Core.ChangeScene(new TitleScene());
+        }
+        private void InitializeUI()
+        {
+            GumService.Default.Root.Children.Clear();
+            CreatePausePanel();
         }
 }

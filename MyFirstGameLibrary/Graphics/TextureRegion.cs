@@ -9,6 +9,26 @@ public class TextureRegion
     public Rectangle Region { get; }
     public int Width => Region.Width;
     public int Height => Region.Height;
+    /// <summary>
+    /// Gets the top normalized texture coordinate of this region.
+    /// </summary>
+    public float TopTextureCoordinate => Region.Top / (float)Texture.Height;
+
+    /// <summary>
+    /// Gets the bottom normalized texture coordinate of this region.
+    /// </summary>
+    public float BottomTextureCoordinate => Region.Bottom / (float)Texture.Height;
+
+    /// <summary>
+    ///  Gets the left normalized texture coordinate of this region.
+    /// </summary>
+    public float LeftTextureCoordinate => Region.Left / (float)Texture.Width;
+
+    /// <summary>
+    /// Gets the right normalized texture coordinate of this region.
+    /// </summary>
+    public float RightTextureCoordinate => Region.Right / (float)Texture.Width;
+
 
     public TextureRegion(Texture2D texture, Rectangle region)
     {
