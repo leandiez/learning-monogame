@@ -6,7 +6,8 @@ using MyFirstGameLibrary;
 using MyFirstGameLibrary.Graphics;
 using MyFirstGameLibrary.Primitives;
 namespace DungeonSlimeGame.Actors;
-
+// Slime.cs
+// Contiene las funciones para el movimiento, dibujado y colliders de un SLIME en la escena de juego
 public class Slime(Vector2 position, Vector2 velocity, AnimatedSprite animation) {
     // Propiedades basicas
     public Vector2 Position { get; set; } = position;

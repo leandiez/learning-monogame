@@ -37,6 +37,12 @@
 /processorParam:Quality=Best
 /build:audio/ui.wav
 
+#begin effects/GreyscaleShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:effects/GreyscaleShader.fx
+
 #begin fonts/04b_30.fnt
 /copy:fonts/04b_30.fnt
 

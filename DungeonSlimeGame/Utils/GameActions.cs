@@ -8,6 +8,7 @@ namespace DungeonSlimeGame.Utils;
 /// <summary>
 /// Provee una abstraccion especifica del juego, que mapea inputs fisicos
 /// a acciones del juego, sirviendo de bridge entre el sistema de input y funcionalidad.
+/// Implementa el patron Command
 /// </summary>
 public static class GameActions
 {

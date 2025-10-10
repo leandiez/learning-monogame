@@ -6,7 +6,8 @@ using MyFirstGameLibrary;
 using MyFirstGameLibrary.Graphics;
 using MyFirstGameLibrary.Primitives;
 namespace DungeonSlimeGame.Actors;
-
+// Bat.cs 
+// Contiene las funciones para el movimiento del murcielago para ser usada en la escena de juego 
 public class Bat(Vector2 position, Vector2 velocity, AnimatedSprite animation, SoundEffect bounceSFX) {
     public Vector2  Position { get; set; } = position;
     public Vector2  Velocity { get; set; } = velocity;

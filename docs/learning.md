@@ -1,5 +1,7 @@
 # Conceptos aprendidos durante la creacion de este proyecto
 
+[Volver al Readme.md](../README.md)
+
 ## Content Pipeline
 
 En Monogame todos los recursos que no sean codigo (imagenes, audio, efectos, datos de juego, etc) se les llama Contenido. 
