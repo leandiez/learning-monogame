@@ -1,53 +1,125 @@
-name: Compilar y lanzar proyecto Monogame
+name: Compilar y lanzar Windows Linux y MacOS
 
-# 1. Definición del Disparador (Trigger)
-# Este workflow solo se ejecutará cuando se cree y empuje un tag
-# que coincida con el patrón 'v*.*.*' (ej: v1.0, v1.2.3).
 on:
   push:
     tags:
       - 'v*.*.*'
 
 jobs:
+  # --- JOB 1: Compilar para cada plataforma ---
   build:
-    # 2. Entorno de Ejecución
-    # Se ejecutará en la última versión de Ubuntu disponible en GitHub Actions.
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            platform: Windows
+          - os: ubuntu-latest
+            rid: linux-x64
+            platform: Linux
+          - os: macos-latest
+            rid: osx-x64 # Compilaremos solo para Intel x64 por simplicidad en el workflow
+            platform: macOS
+
+    runs-on: ${{ matrix.os }}
 
     steps:
-      # 3. Checkout del Código
-      # Descarga el código de tu repositorio para que el workflow pueda acceder a él.
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 4. Configuración de .NET
-      # Instala la versión de .NET que tu proyecto necesita.
-      # Cambia '8.0.x' por la versión que estés usando (ej: '6.0.x', '7.0.x').
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x' 
+          dotnet-version: '8.0.x'
 
-      # 5. Restauración de Dependencias
-      # Ejecuta 'dotnet restore' para descargar todos los paquetes NuGet necesarios.
       - name: Restore dependencies
         run: dotnet restore
 
-      # 6. Compilación del Proyecto
-      # Compila tu proyecto en modo 'Release'.
-      # Reemplaza 'TuProyecto.csproj' con la ruta a tu archivo .csproj principal.
-      # El argumento -p:PublishSingleFile=true puede ser útil para empaquetar en un solo ejecutable.
       - name: Build project
-        run: dotnet publish -c Release --self-contained -r win-x64 -p:PublishSingleFile=true TuProyecto/TuProyecto.csproj -o ./publish
+        # Reemplaza 'TuProyecto/TuProyecto.csproj' con la ruta a tu archivo .csproj
+        run: dotnet publish -c Release --self-contained -r ${{ matrix.rid }} -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish
 
-      # 7. Empaquetado de los Archivos
-      # Comprime los archivos de la carpeta de publicación en un archivo .zip para adjuntarlo al release.
-      # El nombre del archivo zip incluirá el tag del release.
-      - name: Zip release files
-        run: zip -r release.zip ./publish
+      # --- Empaquetado para Windows ---
+      - name: Package files (Windows)
+        if: runner.os == 'Windows'
+        run: Compress-Archive -Path ./publish/* -DestinationPath release-win.zip
 
-      # 8. Creación del Release en GitHub
-      # Usa una action de la comunidad para crear un nuevo release en la sección "Releases" de tu repo.
+      # --- Empaquetado para Linux ---
+      - name: Package files (Linux)
+        if: runner.os == 'Linux'
+        run: zip -r release-linux.zip ./publish
+
+      # --- Empaquetado ESPECIAL para macOS ---
+      - name: Package files (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          # **Definicion de variables**
+          APP_NAME="DungeonSlime.app"
+          EXECUTABLE_NAME="DungeonSlimeGame" # El nombre del ejecutable generado por dotnet
+          DMG_NAME="DungeonSlime.dmg"
+          VOLUME_NAME="Dungeon Slime"
+
+          # **Crear la estructura del paquete .app**
+          echo "Creando estructura de carpetas para .app..."
+          mkdir -p "$APP_NAME/Contents/MacOS"
+          mkdir -p "$APP_NAME/Contents/Resources"
+          
+          # **Copiar archivos compilados**
+          echo "Copiando archivos del juego..."
+          cp -a ./publish/* "$APP_NAME/Contents/MacOS/"
+          
+          # **Crear Info.plist (archivo de metadatos de la app)**
+          echo "Creando Info.plist..."
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > "$APP_NAME/Contents/Info.plist"
+          echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' >> "$APP_NAME/Contents/Info.plist"
+          echo '<plist version="1.0">' >> "$APP_NAME/Contents/Info.plist"
+          echo '<dict>' >> "$APP_NAME/Contents/Info.plist"
+          echo '  <key>CFBundleExecutable</key>' >> "$APP_NAME/Contents/Info.plist"
+          echo "  <string>$EXECUTABLE_NAME</string>" >> "$APP_NAME/Contents/Info.plist"
+          echo '  <key>CFBundleIdentifier</key>' >> "$APP_NAME/Contents/Info.plist"
+          echo '  <string>com.tucompania.tujuego</string>' >> "$APP_NAME/Contents/Info.plist"
+          echo '  <key>CFBundleName</key>' >> "$APP_NAME/Contents/Info.plist"
+          echo "  <string>$VOLUME_NAME</string>" >> "$APP_NAME/Contents/Info.plist"
+          echo '  <key>CFBundleIconFile</key>' >> "$APP_NAME/Contents/Info.plist"
+          echo '  <string>Icon.icns</string>' >> "$APP_NAME/Contents/Info.plist"
+          echo '  <key>CFBundlePackageType</key>' >> "$APP_NAME/Contents/Info.plist"
+          echo '  <string>APPL</string>' >> "$APP_NAME/Contents/Info.plist"
+          echo '</dict>' >> "$APP_NAME/Contents/Info.plist"
+          echo '</plist>' >> "$APP_NAME/Contents/Info.plist"
+
+          # **Paso 5: Copiar el icono (opcional, pero recomendado)**
+          # Este paso asume que tienes un 'Icon.icns' en la raíz o una carpeta de assets.
+          # cp path/to/your/Icon.icns "$APP_NAME/Contents/Resources/"
+          
+          # **Paso 6: Dar permisos de ejecución**
+          echo "Dando permisos de ejecución..."
+          chmod +x "$APP_NAME/Contents/MacOS/$EXECUTABLE_NAME"
+          
+          # **Paso 7: Crear la imagen de disco .dmg**
+          echo "Creando imagen de disco .dmg..."
+          hdiutil create -fs HFS+ -srcfolder "$APP_NAME" -volname "$VOLUME_NAME" "$DMG_NAME"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-build-${{ matrix.platform }}
+          # Sube el archivo correcto dependiendo de la plataforma
+          path: |
+            ${{ runner.os == 'Windows' && 'release-win.zip' || '' }}
+            ${{ runner.os == 'Linux' && 'release-linux.zip' || '' }}
+            ${{ runner.os == 'macOS' && 'release.dmg' || '' }}
+
+  # --- JOB 2: Crear el Release y subir los artefactos ---
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -57,19 +129,38 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            Aquí puedes agregar una descripción de los cambios de esta versión.
-          draft: true
+            Versión multiplataforma de mi juego MonoGame.
+            - Compilado para Windows, Linux y macOS.
+          draft: false
           prerelease: false
 
-      # 9. Subida del Artefacto al Release
-      # Sube el archivo .zip que creamos en el paso anterior al release recién creado.
-      - name: Upload Release Asset
-        id: upload-release-asset 
+      - name: Upload Windows Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release.zip
-          asset_name: tu-juego-${{ github.ref_name }}.zip
+          asset_path: ./artifacts/game-build-Windows/release.zip
+          asset_name: tu-juego-windows-${{ github.ref_name }}.zip
           asset_content_type: application/zip
+
+      - name: Upload Linux Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./artifacts/game-build-Linux/release.zip
+          asset_name: tu-juego-linux-${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload macOS Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # Busca el archivo .dmg dentro de la carpeta del artefacto de macOS
+          asset_path: ./artifacts/game-build-macOS/*.dmg
+          asset_name: tu-juego-macos-${{ github.ref_name }}.dmg
+          asset_content_type: application/x-apple-diskimage
