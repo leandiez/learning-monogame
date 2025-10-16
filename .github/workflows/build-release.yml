@@ -14,7 +14,7 @@ jobs:
           - os: windows-latest
             rid: win-x64
             platform: Windows
-          - os: ubuntu-latest
+          - os: windows-latest # La compilacion de shaders en Linux esta rota por ahora. Por ello lo hago desde Windows
             rid: linux-x64
             platform: Linux
           - os: macos-latest
@@ -41,17 +41,17 @@ jobs:
 
       # --- Empaquetado para Windows ---
       - name: Package files (Windows)
-        if: runner.os == 'Windows'
+        if: matrix.platform == 'Windows'
         run: Compress-Archive -Path ./publish/* -DestinationPath release-win.zip
 
       # --- Empaquetado para Linux ---
       - name: Package files (Linux)
-        if: runner.os == 'Linux'
+        if: matrix.platform == 'Linux'
         run: zip -r release-linux.zip ./publish
 
       # --- Empaquetado ESPECIAL para macOS ---
       - name: Package files (macOS)
-        if: runner.os == 'macOS'
+        if: matrix.platform == 'macOS'
         run: |
           # **Definicion de variables**
           APP_NAME="DungeonSlime.app"
@@ -105,9 +105,9 @@ jobs:
           name: game-build-${{ matrix.platform }}
           # Sube el archivo correcto dependiendo de la plataforma
           path: |
-            ${{ runner.os == 'Windows' && 'release-win.zip' || '' }}
-            ${{ runner.os == 'Linux' && 'release-linux.zip' || '' }}
-            ${{ runner.os == 'macOS' && 'release.dmg' || '' }}
+            ${{ matrix.platform == 'Windows' && 'release-win.zip' || '' }}
+            ${{ matrix.platform == 'Linux' && 'release-linux.zip' || '' }}
+            ${{ matrix.platform == 'macOS' && 'release.dmg' || '' }}
 
   # --- JOB 2: Crear el Release y subir los artefactos ---
   release:
