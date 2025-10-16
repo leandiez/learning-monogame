@@ -1,0 +1,75 @@
+name: Compilar y lanzar proyecto Monogame
+
+# 1. Definición del Disparador (Trigger)
+# Este workflow solo se ejecutará cuando se cree y empuje un tag
+# que coincida con el patrón 'v*.*.*' (ej: v1.0, v1.2.3).
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    # 2. Entorno de Ejecución
+    # Se ejecutará en la última versión de Ubuntu disponible en GitHub Actions.
+    runs-on: ubuntu-latest
+
+    steps:
+      # 3. Checkout del Código
+      # Descarga el código de tu repositorio para que el workflow pueda acceder a él.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 4. Configuración de .NET
+      # Instala la versión de .NET que tu proyecto necesita.
+      # Cambia '8.0.x' por la versión que estés usando (ej: '6.0.x', '7.0.x').
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x' 
+
+      # 5. Restauración de Dependencias
+      # Ejecuta 'dotnet restore' para descargar todos los paquetes NuGet necesarios.
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # 6. Compilación del Proyecto
+      # Compila tu proyecto en modo 'Release'.
+      # Reemplaza 'TuProyecto.csproj' con la ruta a tu archivo .csproj principal.
+      # El argumento -p:PublishSingleFile=true puede ser útil para empaquetar en un solo ejecutable.
+      - name: Build project
+        run: dotnet publish -c Release --self-contained -r win-x64 -p:PublishSingleFile=true TuProyecto/TuProyecto.csproj -o ./publish
+
+      # 7. Empaquetado de los Archivos
+      # Comprime los archivos de la carpeta de publicación en un archivo .zip para adjuntarlo al release.
+      # El nombre del archivo zip incluirá el tag del release.
+      - name: Zip release files
+        run: zip -r release.zip ./publish
+
+      # 8. Creación del Release en GitHub
+      # Usa una action de la comunidad para crear un nuevo release en la sección "Releases" de tu repo.
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Aquí puedes agregar una descripción de los cambios de esta versión.
+          draft: true
+          prerelease: false
+
+      # 9. Subida del Artefacto al Release
+      # Sube el archivo .zip que creamos en el paso anterior al release recién creado.
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release.zip
+          asset_name: tu-juego-${{ github.ref_name }}.zip
+          asset_content_type: application/zip
