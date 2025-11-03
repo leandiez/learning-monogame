@@ -3,25 +3,13 @@ name: Compilar y lanzar Windows Linux y MacOS
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
+  workflow_dispatch:
 
 jobs:
   # --- JOB 1: Compilar para cada plataforma ---
   build:
-    strategy:
-      matrix:
-        include:
-          - os: windows-latest
-            rid: win-x64
-            platform: Windows
-          - os: windows-latest # La compilacion de shaders en Linux esta rota por ahora. Por ello lo hago desde Windows
-            rid: linux-x64
-            platform: Linux
-          - os: macos-latest
-            rid: osx-x64 # Compilaremos solo para Intel x64 por simplicidad en el workflow
-            platform: macOS
-
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
@@ -30,25 +18,59 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Build project
+      - name: Build project Windows
         # Reemplaza 'TuProyecto/TuProyecto.csproj' con la ruta a tu archivo .csproj
-        run: dotnet publish -c Release --self-contained -r ${{ matrix.rid }} -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish
+        run: dotnet publish -c Release --self-contained -r win-64 -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish/win-64
 
+      - name: Build project Linux
+        # Reemplaza 'TuProyecto/TuProyecto.csproj' con la ruta a tu archivo .csproj
+        run: dotnet publish -c Release --self-contained -r linux-64 -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish/linux-64
+
+      - name: Build project MacOS
+        # Reemplaza 'TuProyecto/TuProyecto.csproj' con la ruta a tu archivo .csproj
+        run: dotnet publish -c Release --self-contained -r osx-x64 -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish/osx-x64
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-build-files
+          # Sube el archivo correcto dependiendo de la plataforma
+          path: ./publish
+          
+  package:
+    needs: build
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            platform: Windows
+          - os: ubuntu-latest 
+            rid: linux-x64
+            platform: Linux
+          - os: macos-latest
+            rid: osx-x64 # Compilaremos solo para Intel x64 por simplicidad en el workflow
+            platform: macOS    
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
       # --- Empaquetado para Windows ---
       - name: Package files (Windows)
         if: matrix.platform == 'Windows'
-        run: Compress-Archive -Path ./publish/* -DestinationPath release-win.zip
-
+        run: Compress-Archive -Path ./artifacts/game-build-files/publish/${{ matrix.rid }}/* -DestinationPath release-win.zip
+      
       # --- Empaquetado para Linux ---
       - name: Package files (Linux)
         if: matrix.platform == 'Linux'
-        run: zip -r release-linux.zip ./publish
-
+        run: zip -r release-linux.zip ./artifacts/game-build-files/publish/${{ matrix.rid }}/*
       # --- Empaquetado ESPECIAL para macOS ---
       - name: Package files (macOS)
         if: matrix.platform == 'macOS'
@@ -58,7 +80,7 @@ jobs:
           EXECUTABLE_NAME="DungeonSlimeGame" # El nombre del ejecutable generado por dotnet
           DMG_NAME="DungeonSlime.dmg"
           VOLUME_NAME="Dungeon Slime"
-
+          
           # **Crear la estructura del paquete .app**
           echo "Creando estructura de carpetas para .app..."
           mkdir -p "$APP_NAME/Contents/MacOS"
@@ -86,7 +108,7 @@ jobs:
           echo '  <string>APPL</string>' >> "$APP_NAME/Contents/Info.plist"
           echo '</dict>' >> "$APP_NAME/Contents/Info.plist"
           echo '</plist>' >> "$APP_NAME/Contents/Info.plist"
-
+          
           # **Paso 5: Copiar el icono (opcional, pero recomendado)**
           # Este paso asume que tienes un 'Icon.icns' en la raíz o una carpeta de assets.
           # cp path/to/your/Icon.icns "$APP_NAME/Contents/Resources/"
@@ -98,28 +120,7 @@ jobs:
           # **Paso 7: Crear la imagen de disco .dmg**
           echo "Creando imagen de disco .dmg..."
           hdiutil create -fs HFS+ -srcfolder "$APP_NAME" -volname "$VOLUME_NAME" "$DMG_NAME"
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: game-build-${{ matrix.platform }}
-          # Sube el archivo correcto dependiendo de la plataforma
-          path: |
-            ${{ matrix.platform == 'Windows' && 'release-win.zip' || '' }}
-            ${{ matrix.platform == 'Linux' && 'release-linux.zip' || '' }}
-            ${{ matrix.platform == 'macOS' && 'release.dmg' || '' }}
-
-  # --- JOB 2: Crear el Release y subir los artefactos ---
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
+          
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -164,3 +165,6 @@ jobs:
           asset_path: ./artifacts/game-build-macOS/*.dmg
           asset_name: tu-juego-macos-${{ github.ref_name }}.dmg
           asset_content_type: application/x-apple-diskimage
+
+  
+  
