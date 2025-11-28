@@ -93,7 +93,7 @@ jobs:
           
           # **Copiar archivos compilados**
           echo "Copiando archivos del juego..."
-          cp -a artifacts/* "$APP_NAME/Contents/MacOS/"
+          cp -a artifacts/osx-64/* "$APP_NAME/Contents/MacOS/"
           
           # **Crear Info.plist (archivo de metadatos de la app)**
           echo "Creando Info.plist..."
