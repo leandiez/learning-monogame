@@ -66,7 +66,7 @@ jobs:
 
       - name: Unzip artifact
         run: |
-          ls -lh artifacts
+          ls -lh
           unzip artifacts/game-build-files.zip -d publish
       
       # --- Empaquetado para Windows ---
