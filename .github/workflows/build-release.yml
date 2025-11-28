@@ -25,11 +25,11 @@ jobs:
 
       - name: Build project Windows
         # Reemplaza 'TuProyecto/TuProyecto.csproj' con la ruta a tu archivo .csproj
-        run: dotnet publish -c Release --self-contained -r win-x64 -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish/win-64
+        run: dotnet publish -c Release --self-contained -r win-x64 -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish/win-x64
 
       - name: Build project Linux
         # Reemplaza 'TuProyecto/TuProyecto.csproj' con la ruta a tu archivo .csproj
-        run: dotnet publish -c Release --self-contained -r linux-x64 -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish/linux-64
+        run: dotnet publish -c Release --self-contained -r linux-x64 -p:PublishReadyToRun=false -p:TieredCompilation=false DungeonSlimeGame/DungeonSlimeGame.csproj -o ./publish/linux-x64
 
       - name: Build project MacOS
         # Reemplaza 'TuProyecto/TuProyecto.csproj' con la ruta a tu archivo .csproj
