@@ -133,6 +133,7 @@ jobs:
           # Sube el archivo correcto dependiendo de la plataforma
           path: |
             *.zip
+            *.dmg
   
   release:
     needs: package
@@ -146,7 +147,11 @@ jobs:
           path: packages
       
       - run: ls -R packages
-
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necesario para git describe y obtener historial completo
+            
       - name: Determinar el Tag de la Release
         id: determine_tag
         run: |
