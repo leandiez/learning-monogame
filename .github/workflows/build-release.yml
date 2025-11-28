@@ -131,7 +131,8 @@ jobs:
         with:
           name: package-${{ matrix.rid }}
           # Sube el archivo correcto dependiendo de la plataforma
-          path: package-*.zip
+          path: |
+            *.zip
   
   release:
     needs: package
