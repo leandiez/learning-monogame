@@ -63,7 +63,7 @@ jobs:
         with:
           name: game-build-files
           path: artifacts
-      
+            
       # --- Empaquetado para Windows ---
       - name: Package files (Windows)
         if: matrix.platform == 'Windows'
@@ -126,14 +126,75 @@ jobs:
           echo "Creando imagen de disco .dmg..."
           hdiutil create -fs HFS+ -srcfolder "$APP_NAME" -volname "$VOLUME_NAME" "$DMG_NAME"
           
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-${{ matrix.rid }}
+          # Sube el archivo correcto dependiendo de la plataforma
+          path: package-*.zip
+  
+  release:
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          pattern: package-*
+          merge-multiple: 'true'
+          path: packages
+      
+      - run: ls -R packages
+
+      - name: Determinar el Tag de la Release
+        id: determine_tag
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          
+          # Obtener el último tag, si existe. Si no, empezar en v1.0.0
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v1.0.0")
+          
+          # Asumiendo formato semver vMAJOR.MINOR.PATCH, incrementamos el minor
+          # Usamos herramientas de línea de comandos para manipular la versión (ej. sed, awk)
+          # Un enfoque más robusto usaría una acción específica de semver, pero este script funciona.
+          
+          # Ejemplo de incremento manual (simplificado, para un caso real se recomienda una acción dedicada):
+          # Asumimos que LATEST_TAG es como v1.2.3
+          MAJOR=$(echo $LATEST_TAG | cut -d '.' -f 1 | tr -d 'v')
+          MINOR=$(echo $LATEST_TAG | cut -d '.' -f 2)
+          PATCH=$(echo $LATEST_TAG | cut -d '.' -f 3)
+          
+          NEW_PATCH=$((PATCH + 1))
+          NEW_TAG="v$MAJOR.$MINOR.$NEW_PATCH" # Creamos una nueva versión patch
+          
+          echo "Último tag encontrado: $LATEST_TAG"
+          echo "Nuevo tag calculado: $NEW_TAG"
+          echo "::set-output name=release_tag::$NEW_TAG"
+          echo "::set-output name=is_manual::true"
+          
+          else
+          # Lógica para push tag: usar el tag que disparó el evento
+          echo "Evento push tag. Usando tag existente."
+          echo "::set-output name=release_tag::${{ github.ref_name }}"
+          echo "::set-output name=is_manual::false"
+          fi
+
+      - name: Crear Nuevo Tag (si es manual)
+        if: steps.determine_tag.outputs.is_manual == 'true'
+        run: |
+          NEW_TAG="${{ steps.determine_tag.outputs.release_tag }}"
+          echo "Creando y pusheando nuevo tag: $NEW_TAG"
+          git tag $NEW_TAG
+          git push origin $NEW_TAG
+      
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.determine_tag.outputs.release_tag }}
+          release_name: Release ${{ steps.determine_tag.outputs.release_tag }}
           body: |
             Versión multiplataforma de mi juego MonoGame.
             - Compilado para Windows, Linux y macOS.
@@ -146,7 +207,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: release-win.zip
+          asset_path: packages/release-win.zip
           asset_name: tu-juego-windows-${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
@@ -156,7 +217,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: release-linux.zip
+          asset_path: packages/release-linux.zip
           asset_name: tu-juego-linux-${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
@@ -167,7 +228,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           # Busca el archivo .dmg dentro de la carpeta del artefacto de macOS
-          asset_path: DungeonSlime.dmg
+          asset_path: packages/DungeonSlime.dmg
           asset_name: tu-juego-macos-${{ github.ref_name }}.dmg
           asset_content_type: application/x-apple-diskimage
 
