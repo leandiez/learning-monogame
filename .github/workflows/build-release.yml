@@ -213,7 +213,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: packages/release-win.zip
+          asset_path: ./packages/release-win.zip
           asset_name: tu-juego-windows-${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
@@ -223,7 +223,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: packages/release-linux.zip
+          asset_path: ./packages/release-linux.zip
           asset_name: tu-juego-linux-${{ github.ref_name }}.zip
           asset_content_type: application/zip
 
@@ -234,7 +234,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           # Busca el archivo .dmg dentro de la carpeta del artefacto de macOS
-          asset_path: packages/DungeonSlime.dmg
+          asset_path: ./packages/DungeonSlime.dmg
           asset_name: tu-juego-macos-${{ github.ref_name }}.dmg
           asset_content_type: application/x-apple-diskimage
 
