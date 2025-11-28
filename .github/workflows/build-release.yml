@@ -73,7 +73,7 @@ jobs:
       - name: Package files (Linux)
         if: matrix.platform == 'Linux'
         run: |
-          chmod +x publish/${{ matrix.rid }}
+          chmod +x artifacts/${{ matrix.rid }}
           zip -r release-linux.zip artifacts/${{ matrix.rid }}/*
           
       # --- Empaquetado ESPECIAL para macOS ---
