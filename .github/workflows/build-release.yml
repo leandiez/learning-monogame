@@ -203,6 +203,6 @@ jobs:
             Versión multiplataforma de mi juego MonoGame.
             - Compilado para Windows, Linux y macOS.
           files: |
-            packages/**/*.zip 
-            packages/**/*.dmg 
+            /home/runner/work/learning-monogame/learning-monogame/packages/*.zip
+            /home/runner/work/learning-monogame/learning-monogame/packages/*.dmg
             
