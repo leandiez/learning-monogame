@@ -139,14 +139,6 @@ jobs:
     needs: package
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          pattern: package-*
-          merge-multiple: 'true'
-          path: packages
-      
-      - run: ls -R packages
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -193,6 +185,15 @@ jobs:
           git tag $NEW_TAG
           git push origin $NEW_TAG
           
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          pattern: package-*
+          merge-multiple: 'true'
+          path: packages
+      
+      - run: ls -R packages
+
       - name: Release Version
         uses: softprops/action-gh-release@v2
         with:
