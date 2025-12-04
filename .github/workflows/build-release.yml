@@ -147,7 +147,6 @@ jobs:
           echo "Último tag encontrado: $LATEST_TAG"
           echo "Nuevo tag calculado: $NEW_TAG"
 
-          # 2. CORRECCION SINTAXIS OUTPUT (Obligatorio hoy en dia)
           echo "release_tag=$NEW_TAG" >> $GITHUB_OUTPUT
           echo "is_manual=true" >> $GITHUB_OUTPUT
 
@@ -160,7 +159,6 @@ jobs:
       - name: Crear Nuevo Tag (si es manual)
         if: steps.determine_tag.outputs.is_manual == 'true'
         run: |
-          # 3. CORRECCION IDENTIDAD GIT (Obligatorio para pushear)
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
