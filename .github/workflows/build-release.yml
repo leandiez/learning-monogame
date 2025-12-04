@@ -192,51 +192,17 @@ jobs:
           echo "Creando y pusheando nuevo tag: $NEW_TAG"
           git tag $NEW_TAG
           git push origin $NEW_TAG
-      
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Release Version
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.determine_tag.outputs.release_tag }}
-          release_name: Release ${{ steps.determine_tag.outputs.release_tag }}
+          draft: false
+          prerelease: false
           body: |
             Versión multiplataforma de mi juego MonoGame.
             - Compilado para Windows, Linux y macOS.
-          draft: false
-          prerelease: false
-
-      - name: Upload Windows Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./packages/release-win.zip
-          asset_name: tu-juego-windows-${{ github.ref_name }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Linux Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./packages/release-linux.zip
-          asset_name: tu-juego-linux-${{ github.ref_name }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload macOS Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          # Busca el archivo .dmg dentro de la carpeta del artefacto de macOS
-          asset_path: ./packages/DungeonSlime.dmg
-          asset_name: tu-juego-macos-${{ github.ref_name }}.dmg
-          asset_content_type: application/x-apple-diskimage
-
-  
-  
+          files: |
+            ./packages/release-win.zip
+            ./packages/release-linux.zip
+            ./packages/DungeonSlime.dmg  
