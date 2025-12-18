@@ -99,33 +99,34 @@ Una buena referencia respecto al patron comando puede encontrarse en [este libro
 
 ## Compilacion
 
-- [Contributor Covenant](https://www.contributor-covenant.org/) - Used
-  for the Code of Conduct
-- [Creative Commons](https://creativecommons.org/) - Used to choose
-  the license
+El proyecto esta generado utilizando el template DesktopGL, con lo cual pueden crearse versiones para Windows, Linux y
+MacOS. Para la automatizacion de este proceso se creo un Workflow de GitHub el cual produce los 3 paquetes y los 
+publica como Releases.
 
-## Contributing
+El proceso manual incluye los siguientes pasos:
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
+- Buildear el proyecto principal segun la plataforma adecuada (Windows, Linux, MAC)
+- Empaquetar los archivos compilados en un instalable para cada plataforma.
+- - Si es Windows o Linux solo se deben configurar permisos de ejecucion y Zippear la carpeta
+- - Si es MacOS, se deben generar una serie de archivos y estructura para poder instalar la aplicacion como DMG.
 
-## Versioning
+Para mayor detalle puede consultarse en el capitulo 25 del Tutorial 2D de Monogame: 
 
-We use [Semantic Versioning](http://semver.org/) for versioning. For the versions
-available, see the [tags on this
-repository](https://github.com/PurpleBooth/a-good-readme-template/tags).
+https://docs.monogame.net/articles/tutorials/building_2d_games/25_packaging_game/index.html?tabs=windows
 
-## Authors
+## Problemas conocidos
 
-- **Billie Thompson** - *Provided README Template* -
-  [PurpleBooth](https://github.com/PurpleBooth)
+### Compilacion de Shaders en ArchLinux
+Para compilar el contenido con Efectos, se debe contemplar una configuracion particular en Linux, la cual requiere 
+de Wine y una version de dotnet y FXCSS particular. 
+Hay un script en el sitio de Monogame con el detalle de la configuracion, sin embargo la ultima version de Wine (10.20) 
+parece fallar con la libreria "icu.dll" e "icuuc.dll".
 
-See also the list of
-[contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors)
-who participated in this project.
+De momento deshabilitando estas librerias usando winecfg, deberia ser suficiente para resolver el problema.
 
-## License
+## Licencia
 
-This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
-Creative Commons License - see the [LICENSE.md](LICENSE.md) file for
-details
+Este proyecto se encuentra licenciado bajo GPLv3, puedes ver el texto original de la misma
+en el archivo [LICENSE.md](LICENSE.md)
+
+En caso de necesitar una traduccion, utilizar el siguiente enlace: https://lslspanish.github.io/translation_GPLv3_to_spanish/
