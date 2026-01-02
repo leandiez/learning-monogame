@@ -9,6 +9,7 @@ namespace DungeonSlimeGame {
     public class Game2 : Core {
         // The background theme song.
         private Song _themeSong;
+        private GumService GumUI => GumService.Default;
 
         public Game2() : base("Dungeon Slime", 1280, 720, false) {
         }
@@ -36,11 +37,11 @@ namespace DungeonSlimeGame {
             // Initialize the Gum service. The second parameter specifies
             // the version of the default visuals to use. V2 is the latest
             // version.
-            GumService.Default.Initialize(this, DefaultVisualsVersion.V2);
+            GumUI.Initialize(this, DefaultVisualsVersion.V2);
 
             // Tell the Gum service which content manager to use.  We will tell it to
             // use the global content manager from our Core.
-            GumService.Default.ContentLoader.XnaContentManager = Core.Content;
+            GumUI.ContentLoader.XnaContentManager = Core.Content;
 
             // Register keyboard input for UI control.
             FrameworkElement.KeyboardsForUiControl.Add(GumService.Default.Keyboard);
@@ -61,9 +62,9 @@ namespace DungeonSlimeGame {
             // The assets created for the UI were done so at 1/4th the size to keep the size of the
             // texture atlas small.  So we will set the default canvas size to be 1/4th the size of
             // the game's resolution then tell gum to zoom in by a factor of 4.
-            GumService.Default.CanvasWidth = GraphicsDevice.PresentationParameters.BackBufferWidth / 4.0f;
-            GumService.Default.CanvasHeight = GraphicsDevice.PresentationParameters.BackBufferHeight / 4.0f;
-            GumService.Default.Renderer.Camera.Zoom = 4.0f;
+            GumUI.CanvasWidth = GraphicsDevice.PresentationParameters.BackBufferWidth / 4.0f;
+            GumUI.CanvasHeight = GraphicsDevice.PresentationParameters.BackBufferHeight / 4.0f;
+            GumUI.Renderer.Camera.Zoom = 4.0f;
         }
 
     }
