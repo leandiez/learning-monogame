@@ -25,8 +25,10 @@ public class InputManager
     /// <param name="game">The game this input manager belongs to.</param>
     public InputManager()
     {
+        #if WINDOWS
         // Agrego GamePad sin registrar en SDL.
         SDL_GameControllerAddMapping("03000000790000000600000000000000,G-Shark GS-GP702,a:b2,b:b1,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,leftshoulder:b4,leftstick:b10,lefttrigger:b6,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:b7,rightx:a2,righty:a4,start:b9,x:b3,y:b0,platform:Windows,");
+        #endif
         Keyboard = new KeyboardInfo();
         Mouse = new MouseInfo();
 
