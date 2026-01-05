@@ -46,6 +46,7 @@ public class TitleScene : Scene {
     private SoundEffect _uiSoundEffect;
     private Panel _titleScreenButtonsPanel;
     private Panel _optionsPanel;
+    private Panel _hintsPanel;
     private AnimatedButton _optionsButton;
     private AnimatedButton _optionsBackButton;
     private TextureAtlas _atlas;
@@ -153,6 +154,11 @@ public class TitleScene : Scene {
         CreateTitlePanel();
         CreateOptionsPanel();
     }
+
+    private void CreateHintPanel() {
+        _hintsPanel = new Panel();
+        _hintsPanel.Dock(Gum.Wireframe.Dock.Fill);
+    }
     private void CreateTitlePanel()
     {
         // Create a container to hold all of our buttons
@@ -163,7 +169,7 @@ public class TitleScene : Scene {
         AnimatedButton startButton = new AnimatedButton(_atlas);
         startButton.Anchor(Gum.Wireframe.Anchor.BottomLeft);
         startButton.Visual.X = 50;
-        startButton.Visual.Y = -12;
+        startButton.Visual.Y = -30;
         startButton.Visual.Width = 70;
         startButton.Text = "Start";
         startButton.Click += HandleStartClicked;
@@ -172,7 +178,7 @@ public class TitleScene : Scene {
         _optionsButton = new AnimatedButton(_atlas);
         _optionsButton.Anchor(Gum.Wireframe.Anchor.BottomRight);
         _optionsButton.Visual.X = -50;
-        _optionsButton.Visual.Y = -12;
+        _optionsButton.Visual.Y = -30;
         _optionsButton.Visual.Width = 70;
         _optionsButton.Text = "Options";
         _optionsButton.Click += HandleOptionsClicked;
