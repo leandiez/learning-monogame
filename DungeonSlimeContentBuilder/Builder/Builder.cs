@@ -35,13 +35,25 @@ public class Builder : ContentBuilder
     public override IContentCollection GetContentCollection()
     {
         var contentCollection = new ContentCollection();
+        
+        
 
         // include everything in the folder
         contentCollection.Include<WildcardRule>("*");
+        
+        //REGLA PARA EXCEPTUAR .ttfs YA QUE SE NECESITAN PARA EL SPRITEFONT PERO NO BUILDEARSE EN SI MISMOS
+        contentCollection.Exclude<WildcardRule>("*.ttf");
+        
+        // REGLA PARA EXCEPTUAR PROYECTO GUM ACTUALMENTE SIN USO
+        contentCollection.Exclude<WildcardRule>("GumProject/*");
+        
+        // REGLA PARA COPIAR XMLs Y FNT YA QUE SON CONSUMIDOS DIRECTO DESDE EL CODIGO SIN PROCESAR
+        contentCollection.IncludeCopy<WildcardRule>("*.fnt");
+        contentCollection.IncludeCopy<WildcardRule>("*.xml");
 
         // By default, all content will be imported from the Assets folder using the default importer for their file type.
         // Please add any custom content collection rules here.
-
+        
         return contentCollection;
     }
 }
