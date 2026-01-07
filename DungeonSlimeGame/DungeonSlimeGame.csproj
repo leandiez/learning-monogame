@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <RollForward>Major</RollForward>
     <PublishReadyToRun>false</PublishReadyToRun>
     <TieredCompilation>false</TieredCompilation>
@@ -25,8 +25,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Gum.Monogame" Version="2025.8.3.3" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*" />
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.5-preview.2" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.5-preview.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyFirstGameLibrary\MyFirstGameLibrary.csproj" />

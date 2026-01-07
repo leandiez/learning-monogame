@@ -4,4 +4,5 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\Leandro\.nuget\packages\flatredball.gumcommon\2025.8.3.3\lib\net6.0\GumCommon.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Leandro\.nuget\packages\gum.monogame\2025.8.3.3\lib\net6.0\MonoGameGum.dll" /&gt;&#xD;
-&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
+&lt;/AssemblyExplorer&gt;</s:String>
+	</wpf:ResourceDictionary>
