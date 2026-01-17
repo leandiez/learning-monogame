@@ -73,3 +73,12 @@ Los archivos YAML pueden ser utilizados para:
 ## Generación
 
 Esta documentación fue generada automáticamente mediante análisis del código fuente C#.
+
+### Notas y Limitaciones
+
+La documentación se generó mediante análisis por expresiones regulares del código fuente. Mientras que la mayoría de las estructuras se capturan correctamente, algunos casos especiales pueden tener pequeñas imprecisiones en:
+- Métodos con sintaxis compleja
+- Comentarios multilinea o código comentado
+- Algunas construcciones avanzadas de C#
+
+A pesar de estas limitaciones, la documentación proporciona una vista general completa y precisa de la estructura del proyecto, incluyendo todas las clases principales, sus propiedades, métodos y eventos.
