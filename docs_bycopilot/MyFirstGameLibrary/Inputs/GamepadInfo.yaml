@@ -1,0 +1,63 @@
+file: GamepadInfo.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Inputs/GamepadInfo.cs
+classes:
+- name: GamePadInfo
+  description: Agrega una capa de "middleware" a los Inputs y su propio metodo para
+    actualizarse
+  inheritance: null
+  properties:
+  - name: PlayerIndex
+    type: PlayerIndex
+    description: Gets the state of input for this gamepad during the previous update
+      cycle.
+  - name: PreviousState
+    type: GamePadState
+    description: Gets the state of input for this gamepad during the current update
+      cycle.
+  - name: CurrentState
+    type: GamePadState
+    description: Gets a value that indicates if this gamepad is currently connected.
+  methods:
+  - name: GamePadInfo
+    return_type: public
+    parameters: PlayerIndex playerIndex
+    description: Updates the state information for this gamepad input.
+  - name: GamePadState
+    return_type: new
+    parameters: none
+    description: Updates the state information for this gamepad input.
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: IsButtonDown
+    return_type: bool
+    parameters: Buttons button
+    description: Returns a value that indicates whether the specified gamepad button
+      is currently up.
+  - name: IsButtonUp
+    return_type: bool
+    parameters: Buttons button
+    description: Returns a value that indicates whether the specified gamepad button
+      was just pressed on the current frame.
+  - name: WasButtonJustPressed
+    return_type: bool
+    parameters: Buttons button
+    description: Returns a value that indicates whether the specified gamepad button
+      was just released on the current frame.
+  - name: WasButtonJustReleased
+    return_type: bool
+    parameters: Buttons button
+    description: Sets the vibration for all motors of this gamepad.
+  - name: SetVibration
+    return_type: void
+    parameters: float strength, TimeSpan time
+    description: Stops the vibration of all motors for this gamepad.
+  - name: StopVibration
+    return_type: void
+    parameters: none
+    description: Method StopVibration that returns void
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Inputs

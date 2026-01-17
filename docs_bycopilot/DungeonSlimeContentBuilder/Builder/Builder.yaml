@@ -1,0 +1,19 @@
+file: Builder.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeContentBuilder/Builder/Builder.cs
+classes:
+- name: Builder
+  description: Class Builder
+  inheritance: ContentBuilder
+  properties: []
+  methods:
+  - name: GetContentCollection
+    return_type: IContentCollection
+    parameters: none
+    description: Method GetContentCollection that returns IContentCollection
+  - name: ContentCollection
+    return_type: new
+    parameters: none
+    description: Method ContentCollection that returns new
+  events: []
+enums: []
+structs: []

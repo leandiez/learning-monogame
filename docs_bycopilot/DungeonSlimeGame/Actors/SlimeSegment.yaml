@@ -1,0 +1,8 @@
+file: SlimeSegment.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/Actors/SlimeSegment.cs
+classes: []
+enums: []
+structs:
+- name: SlimeSegment
+  description: Struct SlimeSegment
+namespace: DungeonSlimeGame.Actors

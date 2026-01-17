@@ -1,0 +1,48 @@
+file: Tileset.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Graphics/Tileset.cs
+classes:
+- name: Tileset
+  description: Class Tileset
+  inheritance: null
+  properties:
+  - name: TileWidth
+    type: int
+    description: Gets the width, in pixels, of each tile in this tileset.
+  - name: TileHeight
+    type: int
+    description: Gets the height, in pixels, of each tile in this tileset.
+  - name: Columns
+    type: int
+    description: Gets the total number of columns in this tileset.
+  - name: Rows
+    type: int
+    description: Gets the total number of rows in this tileset.
+  - name: Count
+    type: int
+    description: Gets the total number of tiles in this tileset.
+  methods:
+  - name: Tileset
+    return_type: public
+    parameters: TextureRegion textureRegion, int tileWidth, int tileHeight
+    description: Method Tileset that returns public
+  - name: TextureRegion
+    return_type: new
+    parameters: textureRegion.Texture, textureRegion.Region.X + x, textureRegion.Region.Y
+      + y, tileWidth, tileHeight
+    description: Method TextureRegion that returns new
+  - name: GetTile
+    return_type: TextureRegion
+    parameters: int index
+    description: Method GetTile that returns TextureRegion
+  - name: GetTile
+    return_type: TextureRegion
+    parameters: int column, int row
+    description: Method GetTile that returns TextureRegion
+  - name: GetTile
+    return_type: return
+    parameters: index
+    description: Method GetTile that returns return
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Graphics

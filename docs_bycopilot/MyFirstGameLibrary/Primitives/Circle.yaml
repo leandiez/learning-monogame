@@ -1,0 +1,8 @@
+file: Circle.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Primitives/Circle.cs
+classes: []
+enums: []
+structs:
+- name: Circle
+  description: Struct Circle
+namespace: MyFirstGameLibrary.Primitives

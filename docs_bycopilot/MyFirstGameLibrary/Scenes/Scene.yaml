@@ -1,0 +1,58 @@
+file: Scene.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Scenes/Scene.cs
+classes:
+- name: Scene
+  description: Class Scene
+  inheritance: IDisposable
+  properties:
+  - name: Content
+    type: ContentManager
+    description: Property Content of type ContentManager
+  - name: IsDisposed
+    type: bool
+    description: Creates a new scene instance.
+  methods:
+  - name: Scene
+    return_type: public
+    parameters: none
+    description: Creates a new scene instance.
+  - name: ContentManager
+    return_type: new
+    parameters: Core.Content.ServiceProvider
+    description: Creates a new scene instance.
+  - name: Dispose
+    return_type: '>'
+    parameters: 'false'
+    description: Initializes the scene.
+  - name: Initialize
+    return_type: void
+    parameters: none
+    description: Method Initialize that returns void
+  - name: LoadContent
+    return_type: void
+    parameters: none
+    description: Unloads scene-specific content.
+  - name: UnloadContent
+    return_type: void
+    parameters: none
+    description: Unloads scene-specific content.
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Draws this scene.
+  - name: Draw
+    return_type: void
+    parameters: GameTime gameTime
+    description: Disposes of this scene.
+  - name: Dispose
+    return_type: void
+    parameters: none
+    description: Disposes of this scene.
+  - name: Dispose
+    return_type: void
+    parameters: bool disposing
+    description: Method Dispose that returns void
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Scenes

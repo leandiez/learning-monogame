@@ -1,0 +1,72 @@
+file: Tilemap.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Graphics/Tilemap.cs
+classes:
+- name: Tilemap
+  description: Class Tilemap
+  inheritance: null
+  properties:
+  - name: Rows
+    type: int
+    description: Gets the total number of columns in this tilemap.
+  - name: Columns
+    type: int
+    description: Gets the total number of tiles in this tilemap.
+  - name: Count
+    type: int
+    description: Gets or Sets the scale factor to draw each tile at.
+  - name: Scale
+    type: Vector2
+    description: Gets the width, in pixels, each tile is drawn at.
+  methods:
+  - name: Tilemap
+    return_type: public
+    parameters: Tileset tileset, int columns, int rows
+    description: Method Tilemap that returns public
+  - name: SetTile
+    return_type: void
+    parameters: int index, int tilesetID
+    description: Method SetTile that returns void
+  - name: SetTile
+    return_type: void
+    parameters: int column, int row, int tilesetID
+    description: Method SetTile that returns void
+  - name: GetTile
+    return_type: TextureRegion
+    parameters: int index
+    description: Method GetTile that returns TextureRegion
+  - name: GetTile
+    return_type: TextureRegion
+    parameters: int column, int row
+    description: Method GetTile that returns TextureRegion
+  - name: GetTile
+    return_type: return
+    parameters: index
+    description: Draws this tilemap using the given sprite batch.
+  - name: Draw
+    return_type: void
+    parameters: SpriteBatch spriteBatch
+    description: Method Draw that returns void
+  - name: Vector2
+    return_type: new
+    parameters: x * TileWidth, y * TileHeight
+    description: Method Vector2 that returns new
+  - name: FromFile
+    return_type: Tilemap
+    parameters: ContentManager content, string filename
+    description: Method FromFile that returns Tilemap
+  - name: TextureRegion
+    return_type: new
+    parameters: texture, x, y, width, height
+    description: Method TextureRegion that returns new
+  - name: Tileset
+    return_type: new
+    parameters: textureRegion, tileWidth, tileHeight
+    description: Method Tileset that returns new
+  - name: Tilemap
+    return_type: new
+    parameters: tileset, columnCount, rows.Length
+    description: Method Tilemap that returns new
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Graphics

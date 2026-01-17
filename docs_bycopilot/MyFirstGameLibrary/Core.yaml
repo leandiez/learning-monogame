@@ -1,0 +1,86 @@
+file: Core.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Core.cs
+classes:
+- name: Core
+  description: Class Core
+  inheritance: Game
+  properties:
+  - name: Graphics
+    type: GraphicsDeviceManager
+    description: Property Graphics of type GraphicsDeviceManager
+  - name: GraphicsDevice
+    type: GraphicsDevice
+    description: Gets the sprite batch used for all 2D rendering.
+  - name: SpriteBatch
+    type: SpriteBatch
+    description: Gets the content manager used to load global assets.
+  - name: Content
+    type: ContentManager
+    description: Gets a reference to the audio control system.
+  - name: Input
+    type: InputManager
+    description: Gets a reference to the audio control system.
+  - name: Audio
+    type: AudioController
+    description: Gets or Sets a value that indicates if the game should exit when
+      the esc key on the keyboard is pressed.
+  - name: ExitOnEscape
+    type: bool
+    description: Creates a new Core instance.
+  methods:
+  - name: Core
+    return_type: public
+    parameters: string title, int width, int height, bool fullScreen
+    description: Method Core that returns public
+  - name: InvalidOperationException
+    return_type: new
+    parameters: $"Only a single Core instance can be created"
+    description: Method InvalidOperationException that returns new
+  - name: GraphicsDeviceManager
+    return_type: new
+    parameters: this
+    description: Method GraphicsDeviceManager that returns new
+  - name: manager
+    return_type: input
+    parameters: created here beacuse that way I can add devices using SDL2 calls
+    description: Method manager that returns input
+  - name: InputManager
+    return_type: new
+    parameters: none
+    description: Method InputManager that returns new
+  - name: UnloadContent
+    return_type: void
+    parameters: none
+    description: Method UnloadContent that returns void
+  - name: Initialize
+    return_type: void
+    parameters: none
+    description: Method Initialize that returns void
+  - name: SpriteBatch
+    return_type: new
+    parameters: GraphicsDevice
+    description: Method SpriteBatch that returns new
+  - name: AudioController
+    return_type: new
+    parameters: none
+    description: Method AudioController that returns new
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: Draw
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Draw that returns void
+  - name: ChangeScene
+    return_type: void
+    parameters: Scene next
+    description: Method ChangeScene that returns void
+  - name: TransitionScene
+    return_type: void
+    parameters: none
+    description: Method TransitionScene that returns void
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary

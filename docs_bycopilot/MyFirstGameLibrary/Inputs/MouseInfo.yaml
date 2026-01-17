@@ -1,0 +1,85 @@
+file: MouseInfo.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Inputs/MouseInfo.cs
+classes:
+- name: MouseInfo
+  description: Agrega una capa de "middleware" a los Inputs y su propio metodo para
+    actualizarse
+  inheritance: null
+  properties:
+  - name: PreviousState
+    type: MouseState
+    description: Gets or Sets the current position of the mouse cursor in screen space.
+  - name: CurrentState
+    type: MouseState
+    description: Property CurrentState of type MouseState
+  - name: floats
+    type: de
+    description: Gets or Sets the current x-coordinate position of the mouse cursor
+      in screen space.
+  - name: X
+    type: int
+    description: Gets or Sets the current y-coordinate position of the mouse cursor
+      in screen space.
+  - name: Y
+    type: int
+    description: Gets the difference in the mouse cursor position between the previous
+      and current frame.
+  methods:
+  - name: SetPosition
+    return_type: '>'
+    parameters: value.X, value.Y
+    description: Method SetPosition that returns >
+  - name: SetPosition
+    return_type: '>'
+    parameters: value, CurrentState.Y
+    description: Method SetPosition that returns >
+  - name: SetPosition
+    return_type: '>'
+    parameters: CurrentState.X, value
+    description: Method SetPosition that returns >
+  - name: MouseInfo
+    return_type: public
+    parameters: none
+    description: Updates the state information about mouse input.
+  - name: MouseState
+    return_type: new
+    parameters: none
+    description: Method MouseState that returns new
+  - name: Update
+    return_type: void
+    parameters: none
+    description: Returns a value that indicates whether the specified mouse button
+      is currently down.
+  - name: IsButtonDown
+    return_type: bool
+    parameters: MouseButton button
+    description: Method IsButtonDown that returns bool
+  - name: IsButtonUp
+    return_type: bool
+    parameters: MouseButton button
+    description: Method IsButtonUp that returns bool
+  - name: WasButtonJustPressed
+    return_type: bool
+    parameters: MouseButton button
+    description: Method WasButtonJustPressed that returns bool
+  - name: WasButtonJustReleased
+    return_type: bool
+    parameters: MouseButton button
+    description: Method WasButtonJustReleased that returns bool
+  - name: SetPosition
+    return_type: void
+    parameters: int x, int y
+    description: Method SetPosition that returns void
+  - name: MouseState
+    return_type: new
+    parameters: "x,\n            y,\n            CurrentState.ScrollWheelValue,\n\
+      \            CurrentState.LeftButton,\n            CurrentState.MiddleButton,\n\
+      \            CurrentState.RightButton,\n            CurrentState.XButton1,\n\
+      \            CurrentState.XButton2"
+    description: Method MouseState that returns new
+  events: []
+enums:
+- name: MouseButton
+  description: Enum MouseButton
+structs: []
+namespace: MyFirstGameLibrary.Inputs

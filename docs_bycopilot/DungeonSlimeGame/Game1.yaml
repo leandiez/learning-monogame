@@ -1,0 +1,49 @@
+file: Game1.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/Game1.cs
+classes:
+- name: Game1
+  description: JUEGO 1 - Dibuja una textura y la mueve con las flechas. ESC para salir
+  inheritance: Game
+  properties: []
+  methods:
+  - name: Game1
+    return_type: public
+    parameters: none
+    description: Method Game1 that returns public
+  - name: GraphicsDeviceManager
+    return_type: new
+    parameters: this
+    description: Method GraphicsDeviceManager that returns new
+  - name: Initialize
+    return_type: void
+    parameters: none
+    description: Method Initialize that returns void
+  - name: Vector2
+    return_type: new
+    parameters: "_graphics.PreferredBackBufferWidth / 2,\n                       \
+      \    _graphics.PreferredBackBufferHeight / 2"
+    description: Method Vector2 that returns new
+  - name: LoadContent
+    return_type: void
+    parameters: none
+    description: Method LoadContent that returns void
+  - name: SpriteBatch
+    return_type: new
+    parameters: GraphicsDevice
+    description: Method SpriteBatch that returns new
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: Draw
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Draw that returns void
+  - name: Vector2
+    return_type: new
+    parameters: _redBallTexture.Width / 2, _redBallTexture.Height / 2
+    description: Method Vector2 that returns new
+  events: []
+enums: []
+structs: []
+namespace: DungeonSlimeGame

@@ -1,0 +1,23 @@
+file: Animation.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Graphics/Animation.cs
+classes:
+- name: Animation
+  description: Buscar significado de esta sintaxis. Creo que es para inicializar valores
+    de construccion sin tener que poner un bloque especifico.
+  inheritance: null
+  properties:
+  - name: Frames
+    type: List<TextureRegion>
+    description: Property Frames of type List<TextureRegion>
+  - name: Delay
+    type: TimeSpan
+    description: Property Delay of type TimeSpan
+  methods:
+  - name: Animation
+    return_type: public
+    parameters: none
+    description: Method Animation that returns public
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Graphics

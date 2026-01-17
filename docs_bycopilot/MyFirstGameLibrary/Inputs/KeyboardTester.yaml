@@ -1,0 +1,44 @@
+file: KeyboardTester.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Inputs/KeyboardTester.cs
+classes:
+- name: KeyboardTester
+  description: TODO Ver de hacer una escena con este codigo o ver como reutilizarlo
+    para que se pueda aprovechar en un modo DEBUG
+  inheritance: Game
+  properties: []
+  methods:
+  - name: KeyboardTester
+    return_type: public
+    parameters: none
+    description: Method KeyboardTester that returns public
+  - name: GraphicsDeviceManager
+    return_type: new
+    parameters: this
+    description: Method GraphicsDeviceManager that returns new
+  - name: Initialize
+    return_type: void
+    parameters: none
+    description: Method Initialize that returns void
+  - name: LoadContent
+    return_type: void
+    parameters: none
+    description: Method LoadContent that returns void
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: Draw
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Draw that returns void
+  - name: SpriteBatch
+    return_type: new
+    parameters: _graphics.GraphicsDevice
+    description: Method SpriteBatch that returns new
+  - name: Vector2
+    return_type: new
+    parameters: 10, 10
+    description: Method Vector2 that returns new
+  events: []
+enums: []
+structs: []

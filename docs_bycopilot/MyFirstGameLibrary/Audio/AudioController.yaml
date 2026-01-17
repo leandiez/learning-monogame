@@ -1,0 +1,82 @@
+file: AudioController.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Audio/AudioController.cs
+classes:
+- name: AudioController
+  description: Class AudioController
+  inheritance: IDisposable
+  properties:
+  - name: IsMuted
+    type: bool
+    description: Property IsMuted of type bool
+  - name: SongVolume
+    type: float
+    description: Property SongVolume of type float
+  - name: SoundEffectVolume
+    type: float
+    description: Property SoundEffectVolume of type float
+  - name: IsDisposed
+    type: bool
+    description: Property IsDisposed of type bool
+  methods:
+  - name: AudioController
+    return_type: public
+    parameters: none
+    description: Method AudioController that returns public
+  - name: Dispose
+    return_type: '>'
+    parameters: 'false'
+    description: Method Dispose that returns >
+  - name: Dispose
+    return_type: void
+    parameters: none
+    description: Disposes of this audio controller and cleans up resources from another
+      call. IE the finalizer
+  - name: Dispose
+    return_type: void
+    parameters: bool disposing
+    description: Method Dispose that returns void
+  - name: Update
+    return_type: void
+    parameters: none
+    description: Dispose unnused SoundEffect Instances every frame
+  - name: PlaySoundEffect
+    return_type: SoundEffectInstance
+    parameters: SoundEffect soundEffect
+    description: Method PlaySoundEffect that returns SoundEffectInstance
+  - name: PlaySoundEffect
+    return_type: return
+    parameters: soundEffect, 1.0f, 1.0f, 0.0f, false
+    description: Method PlaySoundEffect that returns return
+  - name: PlaySoundEffect
+    return_type: SoundEffectInstance
+    parameters: SoundEffect soundEffect, float volume, float pitch, float pan, bool
+      isLooped
+    description: Method PlaySoundEffect that returns SoundEffectInstance
+  - name: PlaySong
+    return_type: void
+    parameters: Song song, bool isRepeating = true
+    description: Method PlaySong that returns void
+  - name: PauseAudio
+    return_type: void
+    parameters: none
+    description: Pauses all audio.
+  - name: ResumeAudio
+    return_type: void
+    parameters: none
+    description: Resumes play of all previous paused audio.
+  - name: MuteAudio
+    return_type: void
+    parameters: none
+    description: Mutes all audio.
+  - name: UnmuteAudio
+    return_type: void
+    parameters: none
+    description: Unmutes all audio to the volume level prior to muting.
+  - name: ToggleMute
+    return_type: void
+    parameters: none
+    description: Toggles the current audio mute state.
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Audio

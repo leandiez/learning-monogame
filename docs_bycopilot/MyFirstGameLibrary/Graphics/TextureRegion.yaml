@@ -1,0 +1,49 @@
+file: TextureRegion.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Graphics/TextureRegion.cs
+classes:
+- name: TextureRegion
+  description: Representa una region dentro de una Textura cargada por el gestor de
+    contenido de MonoGame
+  inheritance: null
+  properties:
+  - name: Texture
+    type: Texture2D
+    description: Property Texture of type Texture2D
+  - name: Region
+    type: Rectangle
+    description: Property Region of type Rectangle
+  methods:
+  - name: TextureRegion
+    return_type: public
+    parameters: Texture2D texture, Rectangle region
+    description: Method TextureRegion that returns public
+  - name: TextureRegion
+    return_type: public
+    parameters: Texture2D texture, int x, int y, int width, int height
+    description: Method TextureRegion that returns public
+  - name: Rectangle
+    return_type: new
+    parameters: x, y, width, height
+    description: Method Rectangle that returns new
+  - name: Draw
+    return_type: void
+    parameters: SpriteBatch spriteBatch, Vector2 position, Color color
+    description: Method Draw that returns void
+  - name: Draw
+    return_type: void
+    parameters: SpriteBatch spriteBatch, Vector2 position, float rotation, Vector2
+      origin, float scale, Color color, SpriteEffects flip, float layerDepth
+    description: Method Draw that returns void
+  - name: Vector2
+    return_type: new
+    parameters: scale, scale
+    description: Method Vector2 that returns new
+  - name: Draw
+    return_type: void
+    parameters: SpriteBatch spriteBatch, Vector2 position, float rotation, Vector2
+      origin, Vector2 scale, Color color, SpriteEffects effects, float layerDepth
+    description: Method Draw that returns void
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Graphics
