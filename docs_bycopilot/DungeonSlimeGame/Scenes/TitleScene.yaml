@@ -1,0 +1,144 @@
+file: TitleScene.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/Scenes/TitleScene.cs
+classes:
+- name: TitleScene
+  description: Class TitleScene
+  inheritance: Scene
+  properties: []
+  methods:
+  - name: Initialize
+    return_type: void
+    parameters: none
+    description: Method Initialize that returns void
+  - name: Vector2
+    return_type: new
+    parameters: 640, 100
+    description: Method Vector2 that returns new
+  - name: Vector2
+    return_type: new
+    parameters: 757, 207
+    description: Method Vector2 that returns new
+  - name: Vector2
+    return_type: new
+    parameters: 640, 620
+    description: Method Vector2 that returns new
+  - name: InitializeUI
+    return_type: UI
+    parameters: none
+    description: Method InitializeUI that returns UI
+  - name: LoadContent
+    return_type: void
+    parameters: none
+    description: Method LoadContent that returns void
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: Draw
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Draw that returns void
+  - name: Color
+    return_type: new
+    parameters: 32, 40, 78, 255
+    description: Method Color that returns new
+  - name: Rectangle
+    return_type: new
+    parameters: _backgroundOffset.ToPoint(
+    description: Method Rectangle that returns new
+  - name: Vector2
+    return_type: new
+    parameters: 10, 10
+    description: Method Vector2 that returns new
+  - name: Vector2
+    return_type: new
+    parameters: 10, 10
+    description: Method Vector2 that returns new
+  - name: InitializeUI
+    return_type: void
+    parameters: none
+    description: Method InitializeUI that returns void
+  - name: CreateHintPanel
+    return_type: void
+    parameters: none
+    description: Method CreateHintPanel that returns void
+  - name: Panel
+    return_type: new
+    parameters: none
+    description: Method Panel that returns new
+  - name: CreateTitlePanel
+    return_type: void
+    parameters: none
+    description: Method CreateTitlePanel that returns void
+  - name: Panel
+    return_type: new
+    parameters: none
+    description: Method Panel that returns new
+  - name: AnimatedButton
+    return_type: new
+    parameters: _atlas
+    description: Method AnimatedButton that returns new
+  - name: AnimatedButton
+    return_type: new
+    parameters: _atlas
+    description: Method AnimatedButton that returns new
+  - name: HandleStartClicked
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Method HandleStartClicked that returns void
+  - name: GameScene
+    return_type: new
+    parameters: none
+    description: Method GameScene that returns new
+  - name: HandleOptionsClicked
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Method HandleOptionsClicked that returns void
+  - name: CreateOptionsPanel
+    return_type: void
+    parameters: none
+    description: Method CreateOptionsPanel that returns void
+  - name: Panel
+    return_type: new
+    parameters: none
+    description: Method Panel that returns new
+  - name: TextRuntime
+    return_type: new
+    parameters: none
+    description: Method TextRuntime that returns new
+  - name: OptionsSlider
+    return_type: new
+    parameters: _atlas
+    description: Method OptionsSlider that returns new
+  - name: OptionsSlider
+    return_type: new
+    parameters: _atlas
+    description: Method OptionsSlider that returns new
+  - name: AnimatedButton
+    return_type: new
+    parameters: _atlas
+    description: Method AnimatedButton that returns new
+  - name: HandleSfxSliderChanged
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method HandleSfxSliderChanged that returns void
+  - name: HandleSfxSliderChangeCompleted
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Method HandleSfxSliderChangeCompleted that returns void
+  - name: HandleMusicSliderValueChanged
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method HandleMusicSliderValueChanged that returns void
+  - name: HandleMusicSliderValueChangeCompleted
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method HandleMusicSliderValueChangeCompleted that returns void
+  - name: HandleOptionsButtonBack
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Method HandleOptionsButtonBack that returns void
+  events: []
+enums: []
+structs: []
+namespace: DungeonSlimeGame.Scenes

@@ -1,0 +1,40 @@
+file: GameActions.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/Utils/GameActions.cs
+classes:
+- name: GameActions
+  description: 'Provee una abstraccion especifica del juego, que mapea inputs fisicos
+
+    a acciones del juego, sirviendo de bridge entre el sistema de input y funcionalidad.
+
+    Implementa el patron Command'
+  inheritance: null
+  properties: []
+  methods:
+  - name: MoveUp
+    return_type: bool
+    parameters: none
+    description: Method MoveUp that returns bool
+  - name: MoveDown
+    return_type: bool
+    parameters: none
+    description: Method MoveDown that returns bool
+  - name: MoveLeft
+    return_type: bool
+    parameters: none
+    description: Method MoveLeft that returns bool
+  - name: MoveRight
+    return_type: bool
+    parameters: none
+    description: Method MoveRight that returns bool
+  - name: Pause
+    return_type: bool
+    parameters: none
+    description: Verdadero si se presiono la tecla que confirma acciones en el juego
+  - name: Action
+    return_type: bool
+    parameters: none
+    description: Method Action that returns bool
+  events: []
+enums: []
+structs: []
+namespace: DungeonSlimeGame.Utils

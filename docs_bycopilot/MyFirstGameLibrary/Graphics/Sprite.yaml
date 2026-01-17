@@ -1,0 +1,54 @@
+file: Sprite.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Graphics/Sprite.cs
+classes:
+- name: Sprite
+  description: Representa a una textura y expone sus parametros para que puedan ser
+    modificados y gestionados en una instancia propia.
+  inheritance: null
+  properties:
+  - name: Region
+    type: TextureRegion
+    description: Property Region of type TextureRegion
+  - name: Color
+    type: Color
+    description: Property Color of type Color
+  - name: Rotation
+    type: float
+    description: Property Rotation of type float
+  - name: Scale
+    type: Vector2
+    description: Property Scale of type Vector2
+  - name: Origin
+    type: Vector2
+    description: Property Origin of type Vector2
+  - name: LayerDepth
+    type: float
+    description: Property LayerDepth of type float
+  - name: Effects
+    type: SpriteEffects
+    description: Property Effects of type SpriteEffects
+  methods:
+  - name: Sprite
+    return_type: public
+    parameters: none
+    description: Method Sprite that returns public
+  - name: Sprite
+    return_type: public
+    parameters: TextureRegion region
+    description: Method Sprite that returns public
+  - name: CenterOrigin
+    return_type: void
+    parameters: none
+    description: Method CenterOrigin that returns void
+  - name: Vector2
+    return_type: new
+    parameters: Region.Width, Region.Height
+    description: Method Vector2 that returns new
+  - name: Draw
+    return_type: void
+    parameters: SpriteBatch sprBtch, Vector2 pos
+    description: Method Draw that returns void
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Graphics

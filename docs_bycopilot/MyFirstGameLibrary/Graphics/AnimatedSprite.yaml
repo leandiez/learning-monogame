@@ -1,0 +1,28 @@
+file: AnimatedSprite.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Graphics/AnimatedSprite.cs
+classes:
+- name: AnimatedSprite
+  description: Representa un Sprite con multiples regiones las cuales se reproducen
+    secuencialmente.
+  inheritance: Sprite
+  properties:
+  - name: Animation
+    type: Animation
+    description: Property Animation of type Animation
+  methods:
+  - name: AnimatedSprite
+    return_type: public
+    parameters: none
+    description: Method AnimatedSprite that returns public
+  - name: AnimatedSprite
+    return_type: public
+    parameters: Animation animation
+    description: Updates this animated sprite.
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Graphics

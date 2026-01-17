@@ -1,0 +1,120 @@
+file: GameScene.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/Scenes/GameScene.cs
+classes:
+- name: GameScene
+  description: Class GameScene
+  inheritance: Scene
+  properties: []
+  methods:
+  - name: Initialize
+    return_type: void
+    parameters: none
+    description: Method Initialize that returns void
+  - name: InitializeUI
+    return_type: void
+    parameters: none
+    description: Method InitializeUI that returns void
+  - name: GameSceneUI
+    return_type: new
+    parameters: none
+    description: Method GameSceneUI that returns new
+  - name: OnResumeButtonClicked
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method OnResumeButtonClicked that returns void
+  - name: OnRetryButtonClicked
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method OnRetryButtonClicked that returns void
+  - name: OnQuitButtonClicked
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method OnQuitButtonClicked that returns void
+  - name: TitleScene
+    return_type: new
+    parameters: none
+    description: Method TitleScene that returns new
+  - name: InitializeNewGame
+    return_type: void
+    parameters: none
+    description: Method InitializeNewGame that returns void
+  - name: Vector2
+    return_type: new
+    parameters: none
+    description: Method Vector2 that returns new
+  - name: Slime
+    return_type: new
+    parameters: slimePos, Vector2.UnitX, _slimeAnim
+    description: Method Slime that returns new
+  - name: Bat
+    return_type: new
+    parameters: Vector2.Zero, Vector2.One, _batAnim, _batBounceSFX
+    description: Method Bat that returns new
+  - name: LoadContent
+    return_type: void
+    parameters: none
+    description: Method LoadContent that returns void
+  - name: Vector2
+    return_type: new
+    parameters: 4.0f, 4.0f
+    description: Method Vector2 that returns new
+  - name: Vector2
+    return_type: new
+    parameters: 4.0f, 4.0f
+    description: Method Vector2 that returns new
+  - name: Vector2
+    return_type: new
+    parameters: 4.0f, 4.0f
+    description: Method Vector2 that returns new
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: CollisionChecks
+    return_type: void
+    parameters: none
+    description: Method CollisionChecks that returns void
+  - name: PositionBatAwayFromSlime
+    return_type: void
+    parameters: none
+    description: Method PositionBatAwayFromSlime that returns void
+  - name: Vector2
+    return_type: new
+    parameters: roomCenterX, roomCenterY
+    description: Method Vector2 that returns new
+  - name: Vector2
+    return_type: new
+    parameters: slimeBounds.X, slimeBounds.Y
+    description: Method Vector2 that returns new
+  - name: vector
+    return_type: slime
+    parameters: X or Y
+    description: Method vector that returns slime
+  - name: OnSlimeBodyCollision
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method OnSlimeBodyCollision that returns void
+  - name: TogglePause
+    return_type: void
+    parameters: none
+    description: Method TogglePause that returns void
+  - name: GameOver
+    return_type: void
+    parameters: none
+    description: Method GameOver that returns void
+  - name: Draw
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Draw that returns void
+  events:
+  - name: that
+    type: so
+    description: Event that
+  - name: raised
+    type: is
+    description: Event raised
+enums:
+- name: GameState
+  description: Enum GameState
+structs: []
+namespace: DungeonSlimeGame.Scenes

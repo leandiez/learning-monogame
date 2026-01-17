@@ -1,0 +1,83 @@
+file: InputManager.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Inputs/InputManager.cs
+classes:
+- name: InputManager
+  description: 'TODO: Implementar patron Command para agregar capa que separe acciones
+    del juego de los distintos Inputs'
+  inheritance: null
+  properties:
+  - name: Keyboard
+    type: KeyboardInfo
+    description: Gets the state information of mouse input.
+  - name: Mouse
+    type: MouseInfo
+    description: Gets the state information of a gamepad.
+  - name: GamePads
+    type: GamePadInfo[]
+    description: Creates a new InputManager.
+  methods:
+  - name: InputManager
+    return_type: public
+    parameters: none
+    description: Method InputManager that returns public
+  - name: KeyboardInfo
+    return_type: new
+    parameters: none
+    description: Method KeyboardInfo that returns new
+  - name: MouseInfo
+    return_type: new
+    parameters: none
+    description: Method MouseInfo that returns new
+  - name: GamePadInfo
+    return_type: new
+    parameters: (PlayerIndex
+    description: Updates the state information for the keyboard, mouse, and gamepad
+      inputs.
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: SDL_GameControllerAddMapping
+    return_type: int
+    parameters: string mappingString
+    description: Method SDL_GameControllerAddMapping that returns int
+  - name: d_sdl_gamecontrolleraddmapping
+    return_type: int
+    parameters: string mappingString
+    description: Method d_sdl_gamecontrolleraddmapping that returns int
+  - name: EntryPointNotFoundException
+    return_type: new
+    parameters: function
+    description: Method EntryPointNotFoundException that returns new
+  - name: default
+    return_type: return
+    parameters: T
+    description: Method default that returns return
+  - name: typeof
+    return_type: ret,
+    parameters: T
+    description: Method typeof that returns ret,
+  - name: LoadLibraryW
+    return_type: IntPtr
+    parameters: string lpszLib
+    description: Method LoadLibraryW that returns IntPtr
+  - name: GetProcAddress
+    return_type: IntPtr
+    parameters: IntPtr hModule, string procName
+    description: Method GetProcAddress that returns IntPtr
+  - name: LoadLibraryExt
+    return_type: IntPtr
+    parameters: string libname
+    description: Method LoadLibraryExt that returns IntPtr
+  - name: folder
+    return_type: current
+    parameters: .NET Core will copy it there after publish
+    description: Method folder that returns current
+  - name: Exception
+    return_type: new
+    parameters: '"Failed to load library: " + libname'
+    description: Method Exception that returns new
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Inputs

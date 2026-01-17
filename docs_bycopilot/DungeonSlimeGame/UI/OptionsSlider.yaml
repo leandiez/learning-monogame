@@ -1,0 +1,104 @@
+file: OptionsSlider.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/UI/OptionsSlider.cs
+classes:
+- name: OptionsSlider
+  description: A custom slider control that inherits from Gum's Slider class.
+  inheritance: Slider
+  properties:
+  - name: Text
+    type: string
+    description: Creates a new OptionsSlider instance using graphics from the specified
+      texture atlas.
+  methods:
+  - name: OptionsSlider
+    return_type: public
+    parameters: TextureAtlas atlas
+    description: Method OptionsSlider that returns public
+  - name: ContainerRuntime
+    return_type: new
+    parameters: none
+    description: Method ContainerRuntime that returns new
+  - name: NineSliceRuntime
+    return_type: new
+    parameters: none
+    description: Method NineSliceRuntime that returns new
+  - name: TextRuntime
+    return_type: new
+    parameters: none
+    description: Method TextRuntime that returns new
+  - name: ContainerRuntime
+    return_type: new
+    parameters: none
+    description: Method ContainerRuntime that returns new
+  - name: slider
+    return_type: the
+    parameters: left end
+    description: Method slider that returns the
+  - name: NineSliceRuntime
+    return_type: new
+    parameters: none
+    description: Method NineSliceRuntime that returns new
+  - name: NineSliceRuntime
+    return_type: new
+    parameters: none
+    description: Method NineSliceRuntime that returns new
+  - name: slider
+    return_type: the
+    parameters: right end
+    description: Method slider that returns the
+  - name: NineSliceRuntime
+    return_type: new
+    parameters: none
+    description: Method NineSliceRuntime that returns new
+  - name: ContainerRuntime
+    return_type: new
+    parameters: none
+    description: Method ContainerRuntime that returns new
+  - name: ColoredRectangleRuntime
+    return_type: new
+    parameters: none
+    description: Method ColoredRectangleRuntime that returns new
+  - name: TextRuntime
+    return_type: new
+    parameters: none
+    description: Method TextRuntime that returns new
+  - name: TextRuntime
+    return_type: new
+    parameters: none
+    description: Method TextRuntime that returns new
+  - name: StateSaveCategory
+    return_type: new
+    parameters: none
+    description: Method StateSaveCategory that returns new
+  - name: enabled
+    return_type: the
+    parameters: default/unfocused
+    description: Method enabled that returns the
+  - name: StateSave
+    return_type: new
+    parameters: none
+    description: Method StateSave that returns new
+  - name: StateSave
+    return_type: new
+    parameters: none
+    description: Method StateSave that returns new
+  - name: HandleValueChangedByUi
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Automatically focuses the slider when the mouse hovers over it
+  - name: HandleRollOn
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Updates the fill rectangle width to visually represent the current
+      value
+  - name: HandleValueChanged
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Method HandleValueChanged that returns void
+  events:
+  - name: Visual
+    type: handlers
+    description: Automatically focuses the slider when the user interacts with it
+enums: []
+structs: []
+namespace: DungeonSlimeGame.UI

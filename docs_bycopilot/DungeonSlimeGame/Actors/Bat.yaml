@@ -1,0 +1,67 @@
+file: Bat.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/Actors/Bat.cs
+classes:
+- name: Bat
+  description: Contiene las funciones para el movimiento del murcielago para ser usada
+    en la escena de juego
+  inheritance: null
+  properties:
+  - name: Position
+    type: Vector2
+    description: Property Position of type Vector2
+  - name: Velocity
+    type: Vector2
+    description: Property Velocity of type Vector2
+  - name: Animation
+    type: AnimatedSprite
+    description: Property Animation of type AnimatedSprite
+  - name: Collider
+    type: Circle
+    description: Property Collider of type Circle
+  methods:
+  - name: RandomizeVelocity
+    return_type: void
+    parameters: none
+    description: Method RandomizeVelocity that returns void
+  - name: Vector2
+    return_type: new
+    parameters: x, y
+    description: Handles a bounce event when the bat collides with a wall or boundary.
+  - name: Bounce
+    return_type: void
+    parameters: Vector2 normal
+    description: Method Bounce that returns void
+  - name: wall
+    return_type: vertical
+    parameters: left/right
+    description: Method wall that returns vertical
+  - name: wall
+    return_type: horizontal
+    parameters: top/bottom
+    description: Method wall that returns horizontal
+  - name: GetBounds
+    return_type: Circle
+    parameters: none
+    description: Updates the bat.
+  - name: Circle
+    return_type: new
+    parameters: x, y, radius
+    description: Method Circle that returns new
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: Draw
+    return_type: void
+    parameters: none
+    description: Method Draw that returns void
+  events:
+  - name: the
+    type: when
+    description: Event the
+  - name: to
+    type: sticking
+    description: Event to
+enums: []
+structs: []
+namespace: DungeonSlimeGame.Actors

@@ -1,0 +1,130 @@
+file: GameSceneUI.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/UI/GameSceneUI.cs
+classes:
+- name: GameSceneUI
+  description: Class GameSceneUI
+  inheritance: ContainerRuntime
+  properties: []
+  methods:
+  - name: GameSceneUI
+    return_type: public
+    parameters: none
+    description: Method GameSceneUI that returns public
+  - name: CreateScoreText
+    return_type: TextRuntime
+    parameters: none
+    description: Method CreateScoreText that returns TextRuntime
+  - name: TextRuntime
+    return_type: new
+    parameters: none
+    description: Method TextRuntime that returns new
+  - name: CreatePausePanel
+    return_type: Panel
+    parameters: TextureAtlas atlas
+    description: Method CreatePausePanel that returns Panel
+  - name: Panel
+    return_type: new
+    parameters: none
+    description: Method Panel that returns new
+  - name: NineSliceRuntime
+    return_type: new
+    parameters: none
+    description: Method NineSliceRuntime that returns new
+  - name: TextRuntime
+    return_type: new
+    parameters: none
+    description: Method TextRuntime that returns new
+  - name: AnimatedButton
+    return_type: new
+    parameters: atlas
+    description: Method AnimatedButton that returns new
+  - name: AnimatedButton
+    return_type: new
+    parameters: atlas
+    description: Method AnimatedButton that returns new
+  - name: CreateGameOverPanel
+    return_type: Panel
+    parameters: TextureAtlas atlas
+    description: Method CreateGameOverPanel that returns Panel
+  - name: Panel
+    return_type: new
+    parameters: none
+    description: Method Panel that returns new
+  - name: NineSliceRuntime
+    return_type: new
+    parameters: none
+    description: Method NineSliceRuntime that returns new
+  - name: TextRuntime
+    return_type: new
+    parameters: none
+    description: Method TextRuntime that returns new
+  - name: AnimatedButton
+    return_type: new
+    parameters: atlas
+    description: Method AnimatedButton that returns new
+  - name: AnimatedButton
+    return_type: new
+    parameters: atlas
+    description: Method AnimatedButton that returns new
+  - name: OnResumeButtonClicked
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method OnResumeButtonClicked that returns void
+  - name: OnRetryButtonClicked
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method OnRetryButtonClicked that returns void
+  - name: OnQuitButtonClicked
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Method OnQuitButtonClicked that returns void
+  - name: HidePausePanel
+    return_type: panels
+    parameters: none
+    description: Method HidePausePanel that returns panels
+  - name: OnElementGotFocus
+    return_type: void
+    parameters: object sender, EventArgs args
+    description: Updates the text on the score display.
+  - name: UpdateScoreText
+    return_type: void
+    parameters: int score
+    description: Tells the game scene ui to show the pause panel.
+  - name: ShowPausePanel
+    return_type: void
+    parameters: none
+    description: Method ShowPausePanel that returns void
+  - name: HidePausePanel
+    return_type: void
+    parameters: none
+    description: Tells the game scene ui to show the game over panel.
+  - name: ShowGameOverPanel
+    return_type: void
+    parameters: none
+    description: Method ShowGameOverPanel that returns void
+  - name: HideGameOverPanel
+    return_type: void
+    parameters: none
+    description: Updates the game scene ui.
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Draws the game scene ui.
+  - name: Draw
+    return_type: void
+    parameters: none
+    description: Method Draw that returns void
+  events:
+  - name: ResumeButtonClick
+    type: EventHandler
+    description: "Event invoked when the Quit button on either the Pause panel or\
+      \ the\n    Game Over panel is clicked."
+  - name: QuitButtonClick
+    type: EventHandler
+    description: Event invoked when the Retry button on the Game Over panel is clicked.
+  - name: RetryButtonClick
+    type: EventHandler
+    description: Event RetryButtonClick
+enums: []
+structs: []
+namespace: DungeonSlimeGame.UI

@@ -1,0 +1,80 @@
+file: Slime.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/Actors/Slime.cs
+classes:
+- name: Slime
+  description: Contiene las funciones para el movimiento, dibujado y colliders de
+    un SLIME en la escena de juego
+  inheritance: null
+  properties:
+  - name: Position
+    type: Vector2
+    description: Property Position of type Vector2
+  - name: Velocity
+    type: Vector2
+    description: Property Velocity of type Vector2
+  - name: Animation
+    type: AnimatedSprite
+    description: Property Animation of type AnimatedSprite
+  - name: Collider
+    type: Circle
+    description: Property Collider of type Circle
+  methods:
+  - name: Initialize
+    return_type: void
+    parameters: Vector2 startingPosition, float stride
+    description: Method Initialize that returns void
+  - name: SlimeSegment
+    return_type: new
+    parameters: none
+    description: Method SlimeSegment that returns new
+  - name: Vector2
+    return_type: new
+    parameters: _stride, 0
+    description: Method Vector2 that returns new
+  - name: HandleInput
+    return_type: void
+    parameters: none
+    description: Method HandleInput that returns void
+  - name: Move
+    return_type: void
+    parameters: none
+    description: Method Move that returns void
+  - name: Grow
+    return_type: void
+    parameters: none
+    description: Method Grow that returns void
+  - name: SlimeSegment
+    return_type: new
+    parameters: none
+    description: Updates the slime.
+  - name: Update
+    return_type: void
+    parameters: GameTime gameTime
+    description: Method Update that returns void
+  - name: HandleInput
+    return_type: input
+    parameters: none
+    description: Method HandleInput that returns input
+  - name: Draw
+    return_type: void
+    parameters: none
+    description: Method Draw that returns void
+  - name: foreach
+    return_type: it
+    parameters: SlimeSegment segment in _segments
+    description: Method foreach that returns it
+  - name: GetBounds
+    return_type: Circle
+    parameters: none
+    description: Method GetBounds that returns Circle
+  - name: Circle
+    return_type: new
+    parameters: (int
+    description: Method Circle that returns new
+  events:
+  - name: BodyCollision
+    type: EventHandler
+    description: Event BodyCollision
+enums: []
+structs: []
+namespace: DungeonSlimeGame.Actors

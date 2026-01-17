@@ -1,0 +1,116 @@
+file: AnimatedButton.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/UI/AnimatedButton.cs
+classes:
+- name: to
+  description: A custom button implementation that inherits from Gum's Button
+  inheritance: null
+  properties: []
+  methods:
+  - name: AnimatedButton
+    return_type: public
+    parameters: TextureAtlas atlas
+    description: Method AnimatedButton that returns public
+  - name: AnimationChain
+    return_type: new
+    parameters: none
+    description: Method AnimationChain that returns new
+  - name: AnimationChain
+    return_type: new
+    parameters: none
+    description: Method AnimationChain that returns new
+  - name: enabled
+    return_type: the
+    parameters: default/unfocused
+    description: Method enabled that returns the
+  - name: state
+    return_type: focused
+    parameters: for mouse hover while focused
+    description: Method state that returns focused
+  - name: state
+    return_type: highlighted
+    parameters: for mouse hover
+    description: Method state that returns highlighted
+  - name: HandleKeyDown
+    return_type: void
+    parameters: object sender, KeyEventArgs e
+    description: Method HandleKeyDown that returns void
+  - name: HandleTab
+    return_type: control
+    parameters: 'TabDirection.Up, loop: true'
+    description: Automatically focuses the button when the mouse hovers over it.
+  - name: HandleTab
+    return_type: control
+    parameters: 'TabDirection.Down, loop: true'
+    description: Method HandleTab that returns control
+  - name: HandleRollOn
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Method HandleRollOn that returns void
+  events:
+  - name: for
+    type: handlers
+    description: Handles keyboard input for navigation between buttons using left/right
+      keys.
+  - name: for
+    type: handler
+    description: Handles keyboard input for navigation between buttons using left/right
+      keys.
+- name: AnimatedButton
+  description: 'A custom button implementation that inherits from Gum''s Button class
+    to provide
+
+    animated visual feedback when focused.'
+  inheritance: Button
+  properties: []
+  methods:
+  - name: AnimatedButton
+    return_type: public
+    parameters: TextureAtlas atlas
+    description: Method AnimatedButton that returns public
+  - name: AnimationChain
+    return_type: new
+    parameters: none
+    description: Method AnimationChain that returns new
+  - name: AnimationChain
+    return_type: new
+    parameters: none
+    description: Method AnimationChain that returns new
+  - name: enabled
+    return_type: the
+    parameters: default/unfocused
+    description: Method enabled that returns the
+  - name: state
+    return_type: focused
+    parameters: for mouse hover while focused
+    description: Method state that returns focused
+  - name: state
+    return_type: highlighted
+    parameters: for mouse hover
+    description: Method state that returns highlighted
+  - name: HandleKeyDown
+    return_type: void
+    parameters: object sender, KeyEventArgs e
+    description: Method HandleKeyDown that returns void
+  - name: HandleTab
+    return_type: control
+    parameters: 'TabDirection.Up, loop: true'
+    description: Automatically focuses the button when the mouse hovers over it.
+  - name: HandleTab
+    return_type: control
+    parameters: 'TabDirection.Down, loop: true'
+    description: Method HandleTab that returns control
+  - name: HandleRollOn
+    return_type: void
+    parameters: object sender, EventArgs e
+    description: Method HandleRollOn that returns void
+  events:
+  - name: for
+    type: handlers
+    description: Handles keyboard input for navigation between buttons using left/right
+      keys.
+  - name: for
+    type: handler
+    description: Event for
+enums: []
+structs: []
+namespace: DungeonSlimeGame.UI

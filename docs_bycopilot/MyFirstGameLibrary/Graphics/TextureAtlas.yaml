@@ -1,0 +1,83 @@
+file: TextureAtlas.cs
+path: /home/runner/work/learning-monogame/learning-monogame/MyFirstGameLibrary/Graphics/TextureAtlas.cs
+classes:
+- name: TextureAtlas
+  description: Permite crear multiples regions de una sola vez usando un XML
+  inheritance: null
+  properties:
+  - name: Texture
+    type: Texture2D
+    description: Property Texture of type Texture2D
+  methods:
+  - name: TextureAtlas
+    return_type: public
+    parameters: none
+    description: Method TextureAtlas that returns public
+  - name: TextureAtlas
+    return_type: public
+    parameters: Texture2D texture
+    description: Method TextureAtlas that returns public
+  - name: AddRegion
+    return_type: void
+    parameters: string name, int x, int y, int width, int height
+    description: Method AddRegion that returns void
+  - name: TextureRegion
+    return_type: new
+    parameters: Texture, x, y, width, height
+    description: Method TextureRegion that returns new
+  - name: GetRegion
+    return_type: TextureRegion
+    parameters: string name
+    description: Method GetRegion that returns TextureRegion
+  - name: RemoveRegion
+    return_type: bool
+    parameters: string name
+    description: Method RemoveRegion that returns bool
+  - name: Clear
+    return_type: void
+    parameters: none
+    description: Method Clear that returns void
+  - name: CreateSprite
+    return_type: Sprite
+    parameters: string regionName
+    description: Method CreateSprite that returns Sprite
+  - name: Sprite
+    return_type: new
+    parameters: region
+    description: Method Sprite that returns new
+  - name: CreateAnimatedSprite
+    return_type: AnimatedSprite
+    parameters: string animationName
+    description: Method CreateAnimatedSprite that returns AnimatedSprite
+  - name: AnimatedSprite
+    return_type: new
+    parameters: anim
+    description: Method AnimatedSprite that returns new
+  - name: AddAnimation
+    return_type: void
+    parameters: string animationName, Animation animation
+    description: Method AddAnimation that returns void
+  - name: GetAnimation
+    return_type: Animation
+    parameters: string animationName
+    description: Method GetAnimation that returns Animation
+  - name: RemoveAnimation
+    return_type: bool
+    parameters: string animationName
+    description: Method RemoveAnimation that returns bool
+  - name: FromFile
+    return_type: TextureAtlas
+    parameters: ContentManager content, string fileName
+    description: Method FromFile that returns TextureAtlas
+  - name: TextureAtlas
+    return_type: new
+    parameters: none
+    description: Method TextureAtlas that returns new
+  - name: Animation
+    return_type: new
+    parameters: frames, delay
+    description: Method Animation that returns new
+  events: []
+enums: []
+structs: []
+namespace: MyFirstGameLibrary.Graphics

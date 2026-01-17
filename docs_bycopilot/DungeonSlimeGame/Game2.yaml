@@ -1,0 +1,44 @@
+file: Game2.cs
+path: /home/runner/work/learning-monogame/learning-monogame/DungeonSlimeGame/Game2.cs
+classes:
+- name: Game2
+  description: Class Game2
+  inheritance: Core
+  properties: []
+  methods:
+  - name: Game2
+    return_type: public
+    parameters: none
+    description: Method Game2 that returns public
+  - name: Initialize
+    return_type: void
+    parameters: none
+    description: Method Initialize that returns void
+  - name: InitializeGum
+    return_type: UI
+    parameters: none
+    description: Method InitializeGum that returns UI
+  - name: TitleScene
+    return_type: new
+    parameters: none
+    description: Method TitleScene that returns new
+  - name: LoadContent
+    return_type: void
+    parameters: none
+    description: Method LoadContent that returns void
+  - name: InitializeGum
+    return_type: void
+    parameters: none
+    description: Method InitializeGum that returns void
+  - name: KeyCombo
+    return_type: new
+    parameters: none
+    description: Method KeyCombo that returns new
+  - name: KeyCombo
+    return_type: new
+    parameters: none
+    description: Method KeyCombo that returns new
+  events: []
+enums: []
+structs: []
+namespace: DungeonSlimeGame
